@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:delivery_app/constants/constants.dart';
-import 'package:delivery_app/screens/sign_in/sign_in_screen.dart';
-import 'package:delivery_app/constants/size_config.dart';
 
+import 'package:delivery_app/constants/size_config.dart';
 // This is the best practice
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
@@ -55,7 +54,7 @@ class _BodyState extends State<Body> {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                    horizontal: getProportionateScreenWidth(20,context)),
                 child: Column(
                   children: <Widget>[
                     Spacer(),
@@ -70,7 +69,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        
                       },
                     ),
                     Spacer(),

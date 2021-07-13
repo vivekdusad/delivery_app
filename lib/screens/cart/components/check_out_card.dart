@@ -1,9 +1,11 @@
 import 'package:delivery_app/components/default_button.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/screens/checkout/checkout.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -15,11 +17,12 @@ class CheckoutCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+  
     final provider = watch(cartProvider);
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: getProportionateScreenWidth(15),
-        horizontal: getProportionateScreenWidth(30),
+        vertical: getProportionateScreenWidth(15, context),
+        horizontal: getProportionateScreenWidth(30, context),
       ),
       // height: 174,
       decoration: BoxDecoration(
@@ -45,8 +48,8 @@ class CheckoutCard extends ConsumerWidget {
               children: [
                 Container(
                   padding: EdgeInsets.all(10),
-                  height: getProportionateScreenWidth(40),
-                  width: getProportionateScreenWidth(40),
+                  height: getProportionateScreenWidth(40, context),
+                  width: getProportionateScreenWidth(40, context),
                   decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(10),
@@ -63,7 +66,7 @@ class CheckoutCard extends ConsumerWidget {
                 )
               ],
             ),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: getProportionateScreenHeight(20, context)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -79,14 +82,15 @@ class CheckoutCard extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(
-                  width: getProportionateScreenWidth(190),
+                  width: getProportionateScreenWidth(190, context),
                   child: DefaultButton(
                     text: "Check Out",
                     press: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => CheckoutScreen()));
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: CheckoutScreen()));
                     },
                   ),
                 ),

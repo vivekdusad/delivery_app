@@ -20,7 +20,7 @@ class SplashContent extends StatelessWidget {
         Text(
           "TOKOTO",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(36),
+            fontSize: getProportionateScreenWidth(36,context),
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
@@ -32,8 +32,8 @@ class SplashContent extends StatelessWidget {
         Spacer(flex: 2),
         Image.asset(
           image,
-          height: getProportionateScreenHeight(265),
-          width: getProportionateScreenWidth(235),
+          height: getProportionateScreenHeight(265,context),
+          width: getProportionateScreenWidth(235,context),
         ),
       ],
     );

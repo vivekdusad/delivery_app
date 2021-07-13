@@ -11,3 +11,8 @@ class ResultLoad extends ResultsEvent {
   final String path;
   ResultLoad({this.path});
 }
+
+class SearchResultLoad extends ResultsEvent {
+  final String query;
+  SearchResultLoad({this.query});
+}

@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20,context)),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -24,7 +24,7 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.06),
                 CompleteProfileForm(),
-                SizedBox(height: getProportionateScreenHeight(30)),
+                SizedBox(height: getProportionateScreenHeight(30,context)),
                 Text(
                   "By continuing your confirm that you agree \nwith our Term and Condition",
                   textAlign: TextAlign.center,

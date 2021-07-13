@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.all(getProportionateScreenHeight(20)),
+                  padding: EdgeInsets.all(getProportionateScreenHeight(20,context)),
                   child: ProductCard(product: snapshot.data[index]),
                 );
               });

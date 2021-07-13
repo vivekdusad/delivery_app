@@ -19,10 +19,10 @@ class SocalCard extends StatelessWidget {
       onTap: press,
       child: Container(
         margin:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
-        padding: EdgeInsets.all(getProportionateScreenWidth(12)),
-        height: getProportionateScreenHeight(40),
-        width: getProportionateScreenWidth(40),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10,context)),
+        padding: EdgeInsets.all(getProportionateScreenWidth(12,context)),
+        height: getProportionateScreenHeight(40,context),
+        width: getProportionateScreenWidth(40,context),
         decoration: BoxDecoration(
           color: Color(0xFFF5F6F9),
           shape: BoxShape.circle,

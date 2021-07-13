@@ -21,7 +21,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(getProportionateScreenHeight(10)),
+          padding: EdgeInsets.all(getProportionateScreenHeight(10,context)),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -35,7 +35,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                     width: 300,
                   ),
                   SizedBox(
-                    height: getProportionateScreenHeight(10),
+                    height: getProportionateScreenHeight(10,context),
                   ),
                   Text("Manually Type your address or tap on Location Button"),
                 ],

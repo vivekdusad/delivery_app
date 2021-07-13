@@ -37,4 +37,44 @@ class DatabaseBase implements Database {
   Future<void> saveOrder(Order order) async {
     await _firestore.collection(ApiPath.orders(uid)).doc().set(order.toMap());
   }
+
+  Future<List<Order>> getHistory() async {
+    final collectionRef =
+        await _firestore.collection(ApiPath.users(uid) + "/orders").get();
+    List<Order> orders =
+        collectionRef.docs.map((e) => Order.fromMap(e.data())).toList();
+    return orders;
+  }
+  Future<bool> updateFavorites(String recipeId) async {
+    DocumentReference favoritesReference =
+        _firestore.collection('users').doc(uid);
+
+    return _firestore.runTransaction((Transaction tx) async {
+      DocumentSnapshot postSnapshot = await tx.get(favoritesReference);
+      if (postSnapshot.exists) {
+        // Extend 'favorites' if the list does not contain the recipe ID:
+        if (!postSnapshot.data()['favorites'].contains(recipeId)) {
+          await tx.update(favoritesReference, <String, dynamic>{
+            'favorites': FieldValue.arrayUnion([recipeId])
+          });
+          // Delete the recipe ID from 'favorites':
+        } else {
+          await tx.update(favoritesReference, <String, dynamic>{
+            'favorites': FieldValue.arrayRemove([recipeId])
+          });
+        }
+      } else {
+        // Create a document for the current user in collection 'users'
+        // and add a new array 'favorites' to the document:
+        await tx.set(favoritesReference, {
+          'favorites': [recipeId]
+        });
+      }
+    }).then((result) {
+      return true;
+    }).catchError((error) {
+      print('Error: $error');
+      return false;
+    });
+  }
 }

@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
     flip.initialize(settings);
     _showNotificationWithDefaultSound(flip);
     });
-    messaging.subscribeToTopic("order");
+    // messaging.subscribeToTopic("order");
     super.initState();
   }
 

@@ -26,6 +26,14 @@ class ResultsBloc extends Bloc<ResultsEvent, ResultsState> {
       } catch (e) {
         ResultsErrorOccured(message: e.toString());
       }
+    }else if (event is SearchResultLoad) {
+      yield ResultsLoading();
+      try {
+        Stream<List<Product>> data = database.getSuggestions(event.query);
+        yield ResultsLoaded(products: data);
+      } catch (e) {
+        ResultsErrorOccured(message: e.toString());
+      }
     }
   }
 }

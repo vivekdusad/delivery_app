@@ -12,10 +12,10 @@ class PopularProducts extends StatelessWidget {
       children: [
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20,context)),
           child: SectionTitle(title: "Popular Products", press: () {}),
         ),
-        SizedBox(height: getProportionateScreenWidth(20)),
+        SizedBox(height: getProportionateScreenWidth(20,context)),
         SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -27,7 +27,7 @@ class PopularProducts extends StatelessWidget {
                   return ProductCard(product: demoProducts[index]);
                 },
               ),
-              SizedBox(width: getProportionateScreenWidth(20)),
+              SizedBox(width: getProportionateScreenWidth(20,context)),
             ],
           ),
         )

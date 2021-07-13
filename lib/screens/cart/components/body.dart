@@ -20,7 +20,7 @@ class _BodyState extends State<Body> {
         final Cart cartprovider = watch(cartProvider);
         return Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20,context)),
           child: ListView.builder(
             itemCount: cartprovider.getProducts.length,
             itemBuilder: (context, index) => Padding(
