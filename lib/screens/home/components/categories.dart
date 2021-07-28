@@ -1,4 +1,5 @@
-import 'package:delivery_app/constants/apipath.dart';
+
+import 'package:delivery_app/constants/enums.dart';
 import 'package:delivery_app/screens/results/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,22 +13,22 @@ class Categories extends StatelessWidget {
       {
         "icon": "assets/icons/Flash Icon.svg",
         "text": "Cleansres",
-        "path": ApiPath.cleansers
+        "path": Category.selfCare
       },
       {
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Kitchen Essentials",
-        "path": ApiPath.kitchen
+        "path": Category.selfCare
       },
       {
         "icon": "assets/icons/Game Icon.svg",
         "text": "Bath Essentials",
-        "path": ApiPath.bath
+        "path": Category.selfCare
       },
       {
         "icon": "assets/icons/Gift Icon.svg",
         "text": "Skin Care",
-        "path": ApiPath.skin
+        "path": Category.selfCare
       },
     ];
     return Padding(

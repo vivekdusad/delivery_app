@@ -1,4 +1,3 @@
-import 'package:delivery_app/models/Cart.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class CartCard extends StatelessWidget {
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.network(cart.images),
+              child: Image.network(cart.image),
             ),
           ),
         ),

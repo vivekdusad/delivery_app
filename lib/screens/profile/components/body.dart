@@ -1,7 +1,6 @@
+import 'package:delivery_app/screens/user_details/user_details.dart';
 import 'package:flutter/material.dart';
-
 import 'profile_menu.dart';
-import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -14,7 +13,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>SettingsUI()))
+            },
           ),
           ProfileMenu(
             text: "Help Center",

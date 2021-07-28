@@ -20,7 +20,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     if (event is GetHistory) {
       yield HistoryLoading();
       try {
-        List<Order> order = await database.getHistory();
+        Stream<List<Order>> order = await database.getHistory();
         yield HistoryLoaded(orders: order);
       } on FirebaseException catch (e) {
         yield HistoryErrorOccured(e: e);

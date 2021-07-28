@@ -1,13 +1,13 @@
+import 'package:delivery_app/constants/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_app/components/default_button.dart';
 import 'package:delivery_app/constants/size_config.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/constants.dart';
 
 class OtpForm extends StatefulWidget {
-  const OtpForm({
-    Key key,
-  }) : super(key: key);
+  TextEditingController otpController;
+  OtpForm({Key key, @required this.otpController}) : super(key: key);
 
   @override
   _OtpFormState createState() => _OtpFormState();
@@ -50,8 +50,9 @@ class _OtpFormState extends State<OtpForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: getProportionateScreenWidth(60,context),
+                width: getProportionateScreenWidth(60, context),
                 child: TextFormField(
+                  controller: widget.otpController,
                   autofocus: true,
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
@@ -64,7 +65,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(60,context),
+                width: getProportionateScreenWidth(60, context),
                 child: TextFormField(
                   focusNode: pin2FocusNode,
                   obscureText: true,
@@ -76,7 +77,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(60,context),
+                width: getProportionateScreenWidth(60, context),
                 child: TextFormField(
                   focusNode: pin3FocusNode,
                   obscureText: true,
@@ -88,7 +89,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(60,context),
+                width: getProportionateScreenWidth(60, context),
                 child: TextFormField(
                   focusNode: pin4FocusNode,
                   obscureText: true,
@@ -109,7 +110,11 @@ class _OtpFormState extends State<OtpForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
             text: "Continue",
-            press: () {},
+            press: () {
+              ProviderContainer()
+                  .read(phoneauth)
+                  .signIn(context, smsOTP: "123456");
+            },
           )
         ],
       ),

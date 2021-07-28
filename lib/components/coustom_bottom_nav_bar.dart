@@ -1,4 +1,3 @@
-import 'package:delivery_app/screens/favorite/favorite.dart';
 import 'package:delivery_app/screens/history/history.dart';
 import 'package:delivery_app/screens/home/home_screen.dart';
 import 'package:delivery_app/screens/profile/profile_screen.dart';
@@ -49,18 +48,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 ),
                 onPressed: () =>
                     Navigator.pushNamed(context, HomeScreen.routeName),
-              ),
-              IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/Heart Icon.svg",
-                  color: MenuState.favourite == selectedMenu
-                      ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, FavoriteScreen.routeName);
-                },
-              ),
+              ),              
               IconButton(
                 icon: SvgPicture.asset(
                   "assets/icons/Chat bubble Icon.svg",

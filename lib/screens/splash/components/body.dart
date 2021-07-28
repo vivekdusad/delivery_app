@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:delivery_app/components/default_button.dart';
 import 'package:delivery_app/constants/constants.dart';
-
+import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
-// This is the best practice
-import '../components/splash_content.dart';
-import '../../../components/default_button.dart';
+import 'package:delivery_app/screens/auth/auth_root.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -12,87 +13,37 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  int currentPage = 0;
-  List<Map<String, String>> splashData = [
-    {
-      "text": "Welcome to Tokoto, Let’s shop!",
-      "image": "assets/images/splash1.png"
-    },
-    {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
-    },
-    {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: PageView.builder(
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                itemCount: splashData.length,
-                itemBuilder: (context, index) => SplashContent(
-                  image: splashData[index]["image"],
-                  text: splashData[index]['text'],
-                ),
-              ),
+        child: Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: AssetImage("assets/images/background.png"),
             ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20,context)),
-                child: Column(
-                  children: <Widget>[
-                    Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        splashData.length,
-                        (index) => buildDot(index: index),
-                      ),
-                    ),
-                    Spacer(flex: 3),
-                    DefaultButton(
-                      text: "Continue",
-                      press: () {
-                        
-                      },
-                    ),
-                    Spacer(),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
-
-  AnimatedContainer buildDot({int index}) {
-    return AnimatedContainer(
-      duration: kAnimationDuration,
-      margin: EdgeInsets.only(right: 5),
-      height: 6,
-      width: currentPage == index ? 20 : 6,
-      decoration: BoxDecoration(
-        color: currentPage == index ? kPrimaryColor : Color(0xFFD8D8D8),
-        borderRadius: BorderRadius.circular(3),
-      ),
-    );
+        Padding(
+          padding: EdgeInsets.all(getProportionateScreenHeight(20, context)),
+          child: DefaultButton(
+            text: "Get Started",
+            press: () async {
+              final ls = await ProviderContainer().read(localStorageProvider);
+              ls.saveBool(key: Constants.firstTime, value: false);
+              Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.bottomToTop,
+                      child: RouteBasedOnAuth()));
+            },
+          ),
+        ),
+      ],
+    ));
   }
 }

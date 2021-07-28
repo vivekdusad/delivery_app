@@ -1,9 +1,7 @@
 class ApiPath {
-  static String cleansers = "cleansers";
-  static String kitchen = "Kitchen Essentials";
-  static String bath = "Bath Essentials";
-  static String skin = "Self Care";
-  static String users(String uid) => "users/$uid";
+  static String users(String uid) => "users";
   static String products = "products";
-  static String orders(String uid) => "users/$uid/orders";
+  static String favorite(String uid) => "favorite/$uid";
+  static String orders(String uid) => "orders/$uid/orders";
+  static String ordersadmin(String uid) => "orders/$uid/orders";
 }

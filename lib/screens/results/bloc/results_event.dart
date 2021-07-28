@@ -8,8 +8,8 @@ abstract class ResultsEvent extends Equatable {
 }
 
 class ResultLoad extends ResultsEvent {
-  final String path;
-  ResultLoad({this.path});
+  final String category;
+  ResultLoad({this.category});
 }
 
 class SearchResultLoad extends ResultsEvent {

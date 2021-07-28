@@ -1,6 +1,10 @@
 import 'package:delivery_app/components/coustom_bottom_nav_bar.dart';
 import 'package:delivery_app/constants/enums.dart';
+import 'package:delivery_app/screens/favorite/components/body.dart';
 import 'package:flutter/material.dart';
+
+
+//!optimazation has to be done
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key key}) : super(key: key);
@@ -10,7 +14,7 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite),
-      body: Container(),
+      body: Body(),
     );
   }
 }

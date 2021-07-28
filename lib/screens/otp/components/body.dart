@@ -5,13 +5,15 @@ import 'package:delivery_app/constants/size_config.dart';
 import 'otp_form.dart';
 
 class Body extends StatelessWidget {
+  TextEditingController otpController;
+  Body({@required TextEditingController otpController});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20,context)),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(20, context)),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -22,7 +24,7 @@ class Body extends StatelessWidget {
               ),
               Text("We sent your code to +1 898 860 ***"),
               buildTimer(),
-              OtpForm(),
+              OtpForm(otpController: otpController,),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
               GestureDetector(
                 onTap: () {

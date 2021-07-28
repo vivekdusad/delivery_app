@@ -6,7 +6,7 @@ class Cart extends ChangeNotifier {
   List<Product> get getProducts => products;
   double get total {
     return products.fold(0.0, (double currentTotal, Product nextProduct) {
-      return currentTotal + double.parse(nextProduct.price);
+      return currentTotal + int.parse(nextProduct.price);
     });
   }
 

@@ -5,7 +5,6 @@ import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../constants/constants.dart';
 import '../constants/size_config.dart';
 
@@ -22,16 +21,16 @@ class ProductCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final cartprovider = watch(cartProvider);
+    final cartprovider = watch(cartProvider);    
     return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(10,context)),
+      padding: EdgeInsets.all(getProportionateScreenWidth(10, context)),
       child: GestureDetector(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               width: width,
-              padding: EdgeInsets.all(getProportionateScreenWidth(20,context)),
+              padding: EdgeInsets.all(getProportionateScreenWidth(20, context)),
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
@@ -55,40 +54,20 @@ class ProductCard extends ConsumerWidget {
                         ),
                         SizedBox(
                           width: 5,
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(50),
-                          onTap: () {},
-                          child: Container(
-                            padding:
-                                EdgeInsets.all(getProportionateScreenWidth(8,context)),
-                            height: getProportionateScreenWidth(28,context),
-                            width: getProportionateScreenWidth(28,context),
-                            decoration: BoxDecoration(
-                              color: true
-                                  ? kPrimaryColor.withOpacity(0.15)
-                                  : kSecondaryColor.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Heart Icon_2.svg",
-                              color:
-                                  true ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-                            ),
-                          ),
-                        ),
+                        ),                        
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(8,context)),
+                    padding:
+                        EdgeInsets.all(getProportionateScreenWidth(8, context)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "\₹${product.price}",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(18,context),
+                            fontSize: getProportionateScreenWidth(18, context),
                             fontWeight: FontWeight.w600,
                             color: kPrimaryColor,
                           ),

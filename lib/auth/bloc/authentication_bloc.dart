@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:delivery_app/helper/userrepositry.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -10,11 +8,10 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
+  final  userRepository;
 
   AuthenticationBloc(this.userRepository) : super(InitialAuthenticationState());
 
-  @override
   AuthenticationState get initialState => InitialAuthenticationState();
 
   @override

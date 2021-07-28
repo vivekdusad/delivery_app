@@ -1,8 +1,4 @@
-
 import 'package:flutter/material.dart';
-
-
-import '../constants/constants.dart';
 import '../constants/size_config.dart';
 
 class NoAccountText extends StatelessWidget {

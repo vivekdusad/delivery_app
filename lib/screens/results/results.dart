@@ -1,3 +1,4 @@
+
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/screens/results/bloc/results_bloc.dart';
 import 'package:delivery_app/screens/results/components/body.dart';
@@ -14,7 +15,7 @@ class ResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, watch, child) {
       var resultBloc = ResultsBloc(watch(databaseProvider));
-      resultBloc.add(ResultLoad(path: path));
+      resultBloc.add(ResultLoad(category: path));
       return BlocProvider(
         create: (context) => resultBloc,
         child: Scaffold(

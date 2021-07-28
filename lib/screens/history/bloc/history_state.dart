@@ -12,7 +12,7 @@ class HistoryInitial extends HistoryState {}
 class HistoryLoading extends HistoryState {}
 
 class HistoryLoaded extends HistoryState {
-  final List<Order> orders;
+  final Stream<List<Order>> orders;
   HistoryLoaded({this.orders});
 }
 

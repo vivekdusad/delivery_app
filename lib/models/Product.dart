@@ -1,30 +1,35 @@
 import 'dart:convert';
 
+import 'package:delivery_app/constants/enums.dart';
 import 'package:flutter/material.dart';
 
 class Product {
   final String id;
   final String name;
-  final String images;
+  final String image;
   final String price;
+  final String category;
 
   Product({
     @required this.id,
-    @required this.images,
+    @required this.image,
     @required this.name,
     @required this.price,
+    @required this.category
   });
 
   Product copyWith({
     int id,
     String name,
     String images,
+    String category,
     String price,
   }) {
     return Product(
       id: id ?? this.id,
+      category: category??this.category,
       name: name ?? this.name,
-      images: images ?? this.images,
+      image: images ?? this.image,
       price: price ?? this.price,
     );
   }
@@ -33,7 +38,7 @@ class Product {
     return {
       'id': id,
       'name': name,
-      'images': images,
+      'images': image,
       'price': price,
     };
   }
@@ -41,8 +46,9 @@ class Product {
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
       id: map['id'],
+      category: map['category'],
       name: map['name'],
-      images: map['images'],
+      image: map['images'],
       price: map['price'],
     );
   }
@@ -54,7 +60,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, name: $name, images: $images, price: $price)';
+    return 'Product(id: $id, name: $name, images: $image, price: $price)';
   }
 
   @override
@@ -64,13 +70,13 @@ class Product {
     return other is Product &&
         other.id == id &&
         other.name == name &&
-        other.images == images &&
+        other.image == image &&
         other.price == price;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ images.hashCode ^ price.hashCode;
+    return id.hashCode ^ name.hashCode ^ image.hashCode ^ price.hashCode;
   }
 }
 
@@ -81,25 +87,29 @@ const url =
 List<Product> demoProducts = [
   Product(
     id: "1",
-    images: url,
+    image: url,
     name: "Mung Daal",
+    category: Category.kitchen,
     price: "250",
   ),
   Product(
     id: "2",
-    images: url,
+    image: url,
     name: "Surf Excel",
+    category: Category.cleansers,
     price: "120",
   ),
   Product(
     id: "3",
-    images: url,
+    image: url,
     name: "Mung Daal",
+    category: Category.kitchen,
     price: "64",
   ),
   Product(
     id: "4",
-    images: url,
+    category: Category.kitchen,
+    image: url,
     name: "Rajma",
     price: "50",
   ),

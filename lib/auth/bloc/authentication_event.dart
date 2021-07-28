@@ -32,6 +32,6 @@ class LoggedOut extends AuthenticationEvent {
   String toString() => 'LoggedOut';
 
   @override
-  // TODO: implement props
+ 
   List<Object> get props => [];
 }

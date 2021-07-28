@@ -9,9 +9,9 @@ class Order {
   String total;
   String name;
   String address;
-
   List<Product> items;
   String date;
+  
   Order({
     @required this.total,
     @required this.name,

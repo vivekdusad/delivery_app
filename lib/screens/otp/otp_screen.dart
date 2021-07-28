@@ -3,7 +3,9 @@ import 'package:delivery_app/constants/size_config.dart';
 
 import 'components/body.dart';
 
-class OtpScreen extends StatelessWidget {
+class Otpscreen extends StatelessWidget {
+  TextEditingController otpController;
+  Otpscreen({this.otpController});
   static String routeName = "/otp";
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class OtpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("OTP Verification"),
       ),
-      body: Body(),
+      body: Body(otpController: otpController,),
     );
   }
 }
