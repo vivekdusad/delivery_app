@@ -7,6 +7,7 @@ import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/screens/changeAddress/changeAddress.dart';
 import 'package:delivery_app/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:delivery_app/screens/checkout/components/paymentcard/confirmOrder.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -221,10 +222,10 @@ class CheckoutScreen extends ConsumerWidget {
                         bloc: checkoutBloc,
                         listener: (context, state) {
                           if (state is OrderSaved) {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ConfirmOrder()));
+                                    builder: (context) => ConfirmOrder(order_id: state.order_id,)));
                           }
                         },
                         child: BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -240,6 +241,9 @@ class CheckoutScreen extends ConsumerWidget {
                               press: () async {
                                 checkoutBloc.add(SaveOrder(
                                     order: Order(
+                                      completted: false,
+                                      ready: false,
+                                      user_id: FirebaseAuth.instance.currentUser.uid,
                                         date: DateTime.now().toString(),
                                         total: (sum + 6).toString(),
                                         name: "vivek",

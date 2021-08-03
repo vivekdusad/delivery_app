@@ -19,12 +19,7 @@ app.get('/', (req, res) => {
 app.post('/', function (req, res) {
     var data =req.body;
     console.log(req.body['user_id']);
-    var payload = {
-        data:{
-            user_id:data['user_id'],
-            order_id:data['order_id']
-        }
-    };
+  
     admin.messaging().sendToTopic(
       "order",
       {        

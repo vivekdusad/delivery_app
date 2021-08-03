@@ -4,8 +4,11 @@ import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/database/database.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:delivery_app/models/order.dart';
+import 'package:delivery_app/models/orderTrack.dart';
 import 'package:delivery_app/models/user.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseBase implements Database {
   final _firestore = FirebaseFirestore.instance;
@@ -42,21 +45,27 @@ class DatabaseBase implements Database {
         .then((value) => print("success"));
   }
 
-  Future<void> saveOrder(Order order) async {
+  Future<String> saveOrder(Order order) async {
     final document = _firestore.collection(ApiPath.orders(uid)).doc();
     final id = document.id;
     await document.set(order.toMap());
-    final doc = _firestore.collection(ApiPath.ordersadmin(uid)).doc();
-    final doc_id = doc.id;
-    
-    Dio().post("http://192.168.0.108:3000", data: {
+    Dio().post("http://192.168.0.103:3000", data: {
       "user_id": "$uid",
       "order_id": "$id",
       "order": "${order.toMap()}"
     });
+    return id;
   }
 
-  Future<Stream<List<Order>>> getHistory() async {
+  Stream<Order> orderTracker(String order_id) {
+    print(uid);
+    print(order_id);
+    final document = _firestore.doc(ApiPath.orders(uid) + "/$order_id");
+    document.update({'name': 'vivek'});
+    document.snapshots().map((event) => Order.fromMap(event.data()));
+  }
+
+  Stream<List<Order>> getHistory()  {
     final collectionRef = _firestore.collection(ApiPath.orders(uid));
     final snapshots = collectionRef.snapshots();
     var result = snapshots.map(

@@ -62,7 +62,7 @@ class PhoneAuth {
     }
   }
 
-  void signout() {
-    auth.signOut();
+  Future<void> signout() async{
+    await auth.signOut();
   }
 }

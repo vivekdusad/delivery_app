@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/constants.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/helper/sharedprefrences.dart';
+import 'package:delivery_app/screens/auth/auth_root.dart';
 import 'package:delivery_app/screens/home/home_screen.dart';
 import 'package:delivery_app/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/routes.dart';
+import 'constants/size_config.dart';
 import 'constants/theme.dart';
 
 void main() async {
@@ -24,6 +26,7 @@ void main() async {
     persistenceEnabled: false,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
+  
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -48,7 +51,14 @@ Future<void> messageHandler(RemoteMessage message) async {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    // TODO: implement initState
+    
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -58,9 +68,10 @@ class _MyAppState extends State<MyApp> {
           return FutureBuilder<LocalStorage>(
             future: watch(localStorageProvider),
             builder: (context, snapshot) {
+              
               if (snapshot.hasData) {
                 if (snapshot.data.contains(key: Constants.firstTime)) {
-                  return HomeScreen();
+                  return RouteBasedOnAuth();
                 }
                 return SplashScreen();
               }

@@ -1,22 +1,27 @@
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/constants/theme.dart';
 import 'package:delivery_app/screens/home/home_screen.dart';
+import 'package:delivery_app/screens/trackorder/trackorder.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmOrder extends StatelessWidget {
-  const ConfirmOrder({Key key}) : super(key: key);
+  final String order_id;
+  const ConfirmOrder({Key key,@required this.order_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: null,
-        actions: [IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.clear),
-                ),],),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.clear),
+          ),
+        ],
+      ),
       body: Container(
         height: getScreenHeight(context),
         child: Column(
@@ -58,7 +63,10 @@ class ConfirmOrder extends StatelessWidget {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TrackOrder(order_id: order_id,)));
+                  },
                   child: Text("Track My Order"),
                 ),
               ),

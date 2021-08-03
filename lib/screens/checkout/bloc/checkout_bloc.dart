@@ -19,8 +19,8 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       yield OrderSaving();
       try {
         
-        await database.saveOrder(event.order);
-        yield OrderSaved();
+       final order_id =  await database.saveOrder(event.order);
+        yield OrderSaved(order_id: order_id);
       } on FirebaseException catch (e) {
         yield OrderErrorOccured(e: e);
       }
