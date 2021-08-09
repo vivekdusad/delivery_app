@@ -62,7 +62,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   }),
               IconButton(
                 icon: SvgPicture.asset(
-                  "assets/icons/Search Icon.svg",
+                  "assets/icons/Search.svg",
                   color: currentIndex == 1
                       ? kPrimaryColor
                       : inActiveIconColor,

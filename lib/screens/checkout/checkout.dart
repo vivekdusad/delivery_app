@@ -12,6 +12,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'components/paymentcard/paymentcard.dart';
 
@@ -242,6 +243,8 @@ class CheckoutScreen extends ConsumerWidget {
                             }
                             return DefaultButton(
                               press: () async {
+                                var position =
+                                    await Geolocator.getCurrentPosition();
                                 var uid = FirebaseAuth.instance.currentUser.uid;
                                 print(uid);
                                 var token =
@@ -249,6 +252,8 @@ class CheckoutScreen extends ConsumerWidget {
                                 print(token);
                                 checkoutBloc.add(SaveOrder(
                                     order: Order(
+                                        lat: position.latitude.toString(),
+                                        long: position.longitude.toString(),
                                         token: token,
                                         completted: false,
                                         cancelled: false,
@@ -259,8 +264,14 @@ class CheckoutScreen extends ConsumerWidget {
                                         total: (sum + 6).toString(),
                                         name: "vivek",
                                         address: "behined nehru garden",
-                                        counts:watch(cartProvider).getProducts.values.toList() ,
-                                        items:watch(cartProvider).getProducts.keys.toList())));
+                                        counts: watch(cartProvider)
+                                            .getProducts
+                                            .values
+                                            .toList(),
+                                        items: watch(cartProvider)
+                                            .getProducts
+                                            .keys
+                                            .toList())));
                                 watch(cartProvider).emptyCart();
 
                                 // socketUtils.sendMessge();

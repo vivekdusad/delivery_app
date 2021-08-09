@@ -12,7 +12,9 @@ class Order {
   String name;
   String address;
   String token;
-  List<Product> items=[];
+  String lat;
+  String long;
+  List<Product> items = [];
   String date;
   // ignore: non_constant_identifier_names
   String user_id;
@@ -21,7 +23,7 @@ class Order {
   bool cancelled = false;
   bool outfordelivery = false;
   bool ready = false;
-  List<int> counts=[];
+  List<int> counts = [];
   Order({
     @required this.total,
     @required this.order_id,
@@ -31,12 +33,14 @@ class Order {
     @required this.items,
     @required this.date,
     @required this.user_id,
-     this.completted=false,
-     this.delivered=false,
-     this.cancelled=false,
-     this.outfordelivery=false,
-     this.ready=false,
-     this.counts,
+    @required this.lat,
+    @required this.long,
+    this.completted = false,
+    this.delivered = false,
+    this.cancelled = false,
+    this.outfordelivery = false,
+    this.ready = false,
+    this.counts,
   });
 
   Order copyWith({
@@ -57,6 +61,8 @@ class Order {
   }) {
     return Order(
       total: total ?? this.total,
+      lat: lat??this.lat,
+      long: long??this.long,
       order_id: order_id ?? this.order_id,
       name: name ?? this.name,
       address: address ?? this.address,
@@ -78,6 +84,8 @@ class Order {
       'total': total,
       'order_id': order_id,
       'name': name,
+      'lat':lat,
+      'long':long,
       'address': address,
       'token': token,
       'items': items?.map((x) => x.toMap())?.toList(),
@@ -94,6 +102,8 @@ class Order {
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
+      long: map['long'],
+      lat: map['lat'],
       total: map['total'],
       order_id: map['order_id'],
       name: map['name'],
@@ -123,23 +133,21 @@ class Order {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is Order &&
-      other.total == total &&
-      other.order_id == order_id &&
-      other.name == name &&
-      other.address == address &&
-      other.token == token &&
-      listEquals(other.items=[], items=[]) &&
-      other.date == date &&
-      other.user_id == user_id &&
-      other.completted == completted &&
-      other.delivered == delivered &&
-      other.cancelled == cancelled &&
-      other.outfordelivery == outfordelivery &&
-      other.ready == ready &&
-      listEquals(other.counts=[], counts=[]);
-  }
 
-  
+    return other is Order &&
+        other.total == total &&
+        other.order_id == order_id &&
+        other.name == name &&
+        other.address == address &&
+        other.token == token &&
+        listEquals(other.items = [], items = []) &&
+        other.date == date &&
+        other.user_id == user_id &&
+        other.completted == completted &&
+        other.delivered == delivered &&
+        other.cancelled == cancelled &&
+        other.outfordelivery == outfordelivery &&
+        other.ready == ready &&
+        listEquals(other.counts = [], counts = []);
+  }
 }

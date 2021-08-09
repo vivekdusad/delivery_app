@@ -2,6 +2,7 @@ import 'package:delivery_app/components/product_card.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:delivery_app/screens/search/bloc/search_bloc.dart';
+import 'package:delivery_app/screens/search/search_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +45,7 @@ class _BodyState extends State<Body> {
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
         print(query);
-        if(query.isNotEmpty){
+        if (query.isNotEmpty) {
           bloc.add(SearchRequested(query: query));
         }
       },
@@ -76,6 +77,9 @@ class _BodyState extends State<Body> {
                     stream: state.products,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        if (snapshot.data.length == 0) {
+                          return EmptySearch();
+                        }
                         return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
