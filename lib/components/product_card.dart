@@ -1,10 +1,11 @@
 import 'dart:ui';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delivery_app/components/rounded_icon_btn.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../constants/constants.dart';
 import '../constants/size_config.dart';
 
@@ -21,7 +22,7 @@ class ProductCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final cartprovider = watch(cartProvider);    
+    final cartprovider = watch(cartProvider);
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(10, context)),
       child: GestureDetector(
@@ -35,8 +36,7 @@ class ProductCard extends ConsumerWidget {
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.network(
-                  "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/moong.jpg?alt=media&token=6c21c753-492a-415c-9330-332f41b1b63c"),
+              child: CachedNetworkImage(imageUrl: url),
             ),
             const SizedBox(width: 20),
             Expanded(
@@ -54,7 +54,7 @@ class ProductCard extends ConsumerWidget {
                         ),
                         SizedBox(
                           width: 5,
-                        ),                        
+                        ),
                       ],
                     ),
                   ),
@@ -86,6 +86,14 @@ class ProductCard extends ConsumerWidget {
                               showShadow: true,
                               press: () {
                                 cartprovider.addToCart(product);
+                                Fluttertoast.showToast(
+                                    msg: "Added",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: kPrimaryColor,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                               },
                             ),
                           ],

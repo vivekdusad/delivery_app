@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +9,11 @@ class CartCard extends StatelessWidget {
   const CartCard({
     Key key,
     @required this.cart,
+    @required this.quantity,
   }) : super(key: key);
 
   final Product cart;
+  final quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +24,15 @@ class CartCard extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 0.88,
             child: Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(10,context)),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Image.network(cart.image),
-            ),
+                padding:
+                    EdgeInsets.all(getProportionateScreenWidth(10, context)),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F6F9),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: url,
+                )),
           ),
         ),
         SizedBox(width: 20),
@@ -47,7 +52,7 @@ class CartCard extends StatelessWidget {
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
                 children: [
                   TextSpan(
-                      text: " x${1}",
+                      text: " x$quantity",
                       style: Theme.of(context).textTheme.bodyText1),
                 ],
               ),

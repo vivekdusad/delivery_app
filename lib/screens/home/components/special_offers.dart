@@ -1,4 +1,6 @@
+import 'package:delivery_app/screens/popularProducts/popular_products.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/size_config.dart';
 import 'section_title.dart';
@@ -13,14 +15,14 @@ class SpecialOffers extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20,context)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(20, context)),
           child: SectionTitle(
             title: "Special for you",
             press: () {},
           ),
         ),
-        SizedBox(height: getProportionateScreenWidth(20,context)),
+        SizedBox(height: getProportionateScreenWidth(20, context)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -29,15 +31,19 @@ class SpecialOffers extends StatelessWidget {
                 image: "assets/images/daal.jpg",
                 category: "Daal",
                 numOfBrands: 18,
-                press: () {},
+                press: () {
+                  Get.to(() => SpecialsProducts(query: "daal",));
+                },
               ),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
                 category: "Masale",
                 numOfBrands: 24,
-                press: () {},
+                press: () {
+                  Get.to(() => SpecialsProducts(query: "masale",));
+                },
               ),
-              SizedBox(width: getProportionateScreenWidth(20,context)),
+              SizedBox(width: getProportionateScreenWidth(20, context)),
             ],
           ),
         ),
@@ -62,12 +68,12 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20,context)),
+      padding: EdgeInsets.only(left: getProportionateScreenWidth(20, context)),
       child: GestureDetector(
         onTap: press,
         child: SizedBox(
-          width: getProportionateScreenWidth(242,context),
-          height: getProportionateScreenWidth(100,context),
+          width: getProportionateScreenWidth(242, context),
+          height: getProportionateScreenWidth(100, context),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
@@ -90,8 +96,8 @@ class SpecialOfferCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(15.0,context),
-                    vertical: getProportionateScreenWidth(10,context),
+                    horizontal: getProportionateScreenWidth(15.0, context),
+                    vertical: getProportionateScreenWidth(10, context),
                   ),
                   child: Text.rich(
                     TextSpan(
@@ -100,7 +106,7 @@ class SpecialOfferCard extends StatelessWidget {
                         TextSpan(
                           text: "$category\n",
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(18,context),
+                            fontSize: getProportionateScreenWidth(18, context),
                             fontWeight: FontWeight.bold,
                           ),
                         ),

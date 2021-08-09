@@ -33,7 +33,7 @@ class _BodyState extends State<Body> {
           child: DefaultButton(
             text: "Get Started",
             press: () async {
-              final ls = await ProviderContainer().read(localStorageProvider);
+              final ls = ProviderContainer().read(localStorageProvider);
               ls.saveBool(key: Constants.firstTime, value: false);
               Navigator.pushReplacement(
                   context,

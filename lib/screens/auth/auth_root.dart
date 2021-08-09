@@ -8,15 +8,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthRoot extends ConsumerWidget {
   const AuthRoot({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final otpsend = watch(otpsentprovider);
-    if (otpsend.isOtpSent) {
-      return Otpscreen();
-    } else {
-      return SignInScreen();
-    }
+    final otpsent = watch(otpsentprovider);
+    return ValueListenableBuilder(
+        valueListenable: otpsent.valueNotifier,
+        builder: (context, value, child) {
+          print(value);
+          if (!value) {
+            return SignInScreen();
+          } else {
+            return Otpscreen();
+          }
+        });
   }
 }
 
@@ -30,7 +34,7 @@ class RouteBasedOnAuth extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting)
             return CircularProgressIndicator();
           if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.data != null&&_firebase.currentUser != null)
+            if (snapshot.data != null && _firebase.currentUser != null)
               return HomeScreen();
             else
               return AuthRoot();

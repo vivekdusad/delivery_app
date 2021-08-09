@@ -26,12 +26,12 @@ class _BodyState extends State<Body> {
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                key: Key(cartprovider.getProducts[index].id.toString()),
+                key: Key(cartprovider.getProducts.keys.elementAt(index).id.toString()),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
                   setState(() {
                     cartprovider.removeFromCart(
-                        cartprovider.getProducts.elementAt(index));
+                        cartprovider.getProducts.keys.elementAt(index));
                   });
                 },
                 background: Container(
@@ -47,7 +47,7 @@ class _BodyState extends State<Body> {
                     ],
                   ),
                 ),
-                child: CartCard(cart: cartprovider.getProducts[index]),
+                child: CartCard(cart: cartprovider.getProducts.keys.elementAt(index),quantity: cartprovider.getProducts.values.elementAt(index),),
               ),
             ),
           ),

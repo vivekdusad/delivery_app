@@ -1,6 +1,6 @@
 enum MenuState {
   home,
-  favourite,
+  search,
   history,
   profile,
 }

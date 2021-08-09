@@ -1,35 +1,41 @@
 import 'dart:convert';
 
-import 'package:delivery_app/constants/enums.dart';
 import 'package:flutter/material.dart';
 
 class Product {
   final String id;
   final String name;
-  final String image;
+  String category;
+  String subcategory;
+  // ignore: non_constant_identifier_names
+  final String image_url;
   final String price;
-  final String category;
 
   Product({
     @required this.id,
-    @required this.image,
+    @required this.category,
+    @required this.subcategory,
+    // ignore: non_constant_identifier_names
+    @required this.image_url,
     @required this.name,
     @required this.price,
-    @required this.category
   });
 
   Product copyWith({
-    int id,
+    String id,
     String name,
     String images,
-    String category,
     String price,
+    String category,
+    String subcategory,
+
   }) {
     return Product(
-      id: id ?? this.id,
       category: category??this.category,
+      subcategory: subcategory??this.category,
+      id: id ?? this.id,
       name: name ?? this.name,
-      image: images ?? this.image,
+      image_url: images ?? this.image_url,
       price: price ?? this.price,
     );
   }
@@ -38,17 +44,20 @@ class Product {
     return {
       'id': id,
       'name': name,
-      'images': image,
+      'image_url': image_url,
       'price': price,
+      'subcategory':subcategory,
+      'category':category,
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'],
+      subcategory: map['subcategory'],
       category: map['category'],
+      id: map['id'],
       name: map['name'],
-      image: map['images'],
+      image_url: map['image_url'],
       price: map['price'],
     );
   }
@@ -60,7 +69,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, name: $name, images: $image, price: $price)';
+    return 'Product(id: $id, name: $name, images: $image_url, price: $price)';
   }
 
   @override
@@ -70,13 +79,13 @@ class Product {
     return other is Product &&
         other.id == id &&
         other.name == name &&
-        other.image == image &&
+        other.image_url == image_url &&
         other.price == price;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ image.hashCode ^ price.hashCode;
+    return id.hashCode ^ name.hashCode ^ image_url.hashCode ^ price.hashCode;
   }
 }
 
@@ -84,36 +93,7 @@ class Product {
 const url =
     "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/moong.jpg?alt=media&token=6c21c753-492a-415c-9330-332f41b1b63c";
 
-List<Product> demoProducts = [
-  Product(
-    id: "1",
-    image: url,
-    name: "Mung Daal",
-    category: Category.kitchen,
-    price: "250",
-  ),
-  Product(
-    id: "2",
-    image: url,
-    name: "Surf Excel",
-    category: Category.cleansers,
-    price: "120",
-  ),
-  Product(
-    id: "3",
-    image: url,
-    name: "Mung Daal",
-    category: Category.kitchen,
-    price: "64",
-  ),
-  Product(
-    id: "4",
-    category: Category.kitchen,
-    image: url,
-    name: "Rajma",
-    price: "50",
-  ),
-];
+
 
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";

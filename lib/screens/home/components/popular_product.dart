@@ -1,7 +1,6 @@
 import 'package:delivery_app/components/product_card.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/constants/constants.dart';
 import 'package:flutter/material.dart';
-
 import '../../../constants/size_config.dart';
 import 'section_title.dart';
 

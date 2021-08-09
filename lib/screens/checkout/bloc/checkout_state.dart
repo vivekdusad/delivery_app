@@ -11,9 +11,12 @@ class CheckoutInitial extends CheckoutState {}
 
 class OrderSaving extends CheckoutState {}
 
+// ignore: must_be_immutable
 class OrderSaved extends CheckoutState {
+  // ignore: non_constant_identifier_names
   String order_id;
   OrderSaved({
+    // ignore: non_constant_identifier_names
     @required this.order_id,
   });
 }

@@ -1,3 +1,5 @@
+import 'package:delivery_app/constants/enums.dart';
+import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
@@ -50,4 +52,39 @@ OutlineInputBorder outlineInputBorder() {
 class Constants{
   static final  String firstTime = "firstTime";
 }
+List<Product> demoProducts = [
+  Product(
+    id: "1",
+    subcategory: "",
+    
+    image_url: url,
+    name: "Mung Daal",
+    category: Category.kitchen,
+    price: "250",
+  ),
+  Product(
+    id: "2",
+    subcategory: "",
+    image_url: url,
+    name: "Surf Excel",
+    category: Category.cleansers,
+    price: "120",
+  ),
+  Product(
+    id: "3",
+    subcategory: "",
+    image_url: url,
+    name: "Mung Daal",
+    category: Category.kitchen,
+    price: "64",
+  ),
+  Product(
+    id: "4",
+    subcategory: "",
+    category: Category.kitchen,
+    image_url: url,
+    name: "Rajma",
+    price: "50",
+  ),
+];
 

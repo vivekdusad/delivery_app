@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_number/mobile_number.dart';
 
-
 class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
@@ -18,6 +17,7 @@ class SignForm extends StatefulWidget {
 class _SignFormState extends State<SignForm> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  int count = 0;
 
   TextEditingController _phoneController = TextEditingController();
   bool remember = false;
@@ -37,7 +37,7 @@ class _SignFormState extends State<SignForm> {
       });
   }
 
-  List<String> _mobileNumber = [];
+  
   List<SimCard> _simCard = <SimCard>[];
 
   @override
@@ -51,64 +51,64 @@ class _SignFormState extends State<SignForm> {
     initMobileNumberState();
   }
 
-  Future<void> initMobileNumberState() async {
+  Future<String> initMobileNumberState() async {
     if (!await MobileNumber.hasPhonePermission) {
       await MobileNumber.requestPhonePermission;
-      return;
+      return "";
     }
-
     try {
       _simCard = (await MobileNumber.getSimCards);
     } on PlatformException catch (e) {
       debugPrint("Failed to get mobile number because of '${e.message}'");
     }
-    if (!mounted) return;
+    if (!mounted) return "";
     if (_simCard.isNotEmpty) {
-      _mobileNumber = _simCard.map((e) => e.number).toList();
+      // _mobileNumber = _simCard.map((e) => e.number).toList();
     }
-    print(_simCard.first.number);
+    return _simCard.first.number;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<String>(
+      future: initMobileNumberState(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (_mobileNumber.isNotEmpty) {
-            print(_mobileNumber.first);
-            showAboutDialog(
-                context: context,
-                children: _mobileNumber.map((e) => Text(e)).toList());
-          }
+          print(snapshot.data);
+          count++;
+          return Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                buildEmailFormField(snapshot.data),
+                SizedBox(height: getProportionateScreenHeight(30, context)),
+                // FormError(errors: errors),
+                SizedBox(height: getProportionateScreenHeight(20, context)),
+                DefaultButton(
+                  text: "Verify",
+                  press: () {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      KeyboardUtil.hideKeyboard(context);
+                      ProviderContainer()
+                          .read(phoneauth)
+                          .verifyPhone(context, _phoneController.text);
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
         }
-        return Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              buildEmailFormField(),
-              SizedBox(height: getProportionateScreenHeight(30, context)),
-              // FormError(errors: errors),
-              SizedBox(height: getProportionateScreenHeight(20, context)),
-              DefaultButton(
-                text: "Verify",
-                press: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    KeyboardUtil.hideKeyboard(context);
-                    ProviderContainer()
-                        .read(phoneauth)
-                        .verifyPhone(_phoneController.text);
-                  }
-                },
-              ),
-            ],
-          ),
-        );
+        return CircularProgressIndicator();
       },
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField buildEmailFormField(String phone) {
+    if (phone.isNotEmpty && count == 1) {
+      _phoneController.value = TextEditingValue(text: phone.substring(2));
+    }
     return TextFormField(
       keyboardType: TextInputType.phone,
       controller: _phoneController,
@@ -116,7 +116,6 @@ class _SignFormState extends State<SignForm> {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
         }
-
         return null;
       },
       validator: (value) {

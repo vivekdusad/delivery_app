@@ -19,7 +19,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   Stream<DetailsState> mapEventToState(
     DetailsEvent event,
   ) async* {
-    final localStorage = await ProviderContainer().read(localStorageProvider);
+    final localStorage = ProviderContainer().read(localStorageProvider);
     final user = await localStorage.getUserFromStorage();
     if (event is DetailsPageOpened) {
       yield DetailsLoading();

@@ -3,6 +3,7 @@ import 'package:delivery_app/constants/size_config.dart';
 
 import 'components/body.dart';
 
+// ignore: must_be_immutable
 class Otpscreen extends StatelessWidget {
   TextEditingController otpController;
   Otpscreen({this.otpController});

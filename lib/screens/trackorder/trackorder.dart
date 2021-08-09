@@ -1,21 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/constants.dart';
-import 'package:delivery_app/constants/provider.dart';
+
 import 'package:delivery_app/models/order.dart';
-import 'package:delivery_app/models/orderTrack.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/ui/firebase_sorted_list.dart';
+
+
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:im_stepper/stepper.dart';
 import 'components/addresswidget.dart';
 import 'components/datewidget.dart';
 import 'components/orderidwidget.dart';
 
 class TrackOrder extends StatefulWidget {
+  // ignore: non_constant_identifier_names
   final String order_id;
+  // ignore: non_constant_identifier_names
   TrackOrder({Key key, @required this.order_id}) : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class TrackOrder extends StatefulWidget {
 }
 
 class _TrackOrderState extends State<TrackOrder> {
+  // ignore: non_constant_identifier_names
   Stream<Order> orderTracker(String order_id) {
     print(order_id);
     final document = FirebaseFirestore.instance
@@ -101,7 +104,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                 color:
                                     data.ready ? Colors.white : kPrimaryColor),
                             Icon(Icons.check,
-                                color: data.delivered
+                                color: data.outfordelivery
                                     ? Colors.white
                                     : kPrimaryColor),
                             Icon(Icons.check,

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
-class ShowOtpScreen extends ChangeNotifier {
-  bool isOtpSent = false;
+class ShowOtpScreen {
+  ValueNotifier valueNotifier = ValueNotifier(false);
   updateValue(bool value) {
-    isOtpSent = value;
-    notifyListeners();
+    valueNotifier.value = value;
   }
 }

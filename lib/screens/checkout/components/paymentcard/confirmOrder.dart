@@ -5,7 +5,9 @@ import 'package:delivery_app/screens/trackorder/trackorder.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmOrder extends StatelessWidget {
+  // ignore: non_constant_identifier_names
   final String order_id;
+  // ignore: non_constant_identifier_names
   const ConfirmOrder({Key key,@required this.order_id}) : super(key: key);
 
   @override

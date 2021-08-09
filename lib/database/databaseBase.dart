@@ -4,11 +4,9 @@ import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/database/database.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:delivery_app/models/order.dart';
-import 'package:delivery_app/models/orderTrack.dart';
 import 'package:delivery_app/models/user.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:uuid/uuid.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class DatabaseBase implements Database {
   final _firestore = FirebaseFirestore.instance;
@@ -19,7 +17,7 @@ class DatabaseBase implements Database {
 
   @override
   Stream<List<Product>> getSuggestions(String query) {
-    final refrence = _firestore.collectionGroup(ApiPath.products);
+    final refrence = _firestore.collection(ApiPath.products);
     final snaps =
         refrence.where("name", isGreaterThanOrEqualTo: query).snapshots();
     var results = snaps.map(
@@ -48,24 +46,27 @@ class DatabaseBase implements Database {
   Future<String> saveOrder(Order order) async {
     final document = _firestore.collection(ApiPath.orders(uid)).doc();
     final id = document.id;
-    await document.set(order.toMap());
-    Dio().post("http://192.168.0.103:3000", data: {
+    await document.set(order.copyWith(order_id: id).toMap());
+    var token = await FirebaseMessaging.instance.getToken();
+    Dio().post("https://a34c21ee09b6.ngrok.io", data: {
       "user_id": "$uid",
       "order_id": "$id",
-      "order": "${order.toMap()}"
+      "order": "${order.toMap()}",
+      'token': "$token",
     });
     return id;
   }
 
+  // ignore: non_constant_identifier_names
   Stream<Order> orderTracker(String order_id) {
     print(uid);
     print(order_id);
     final document = _firestore.doc(ApiPath.orders(uid) + "/$order_id");
     document.update({'name': 'vivek'});
-    document.snapshots().map((event) => Order.fromMap(event.data()));
+    return document.snapshots().map((event) => Order.fromMap(event.data()));
   }
 
-  Stream<List<Order>> getHistory()  {
+  Stream<List<Order>> getHistory() {
     final collectionRef = _firestore.collection(ApiPath.orders(uid));
     final snapshots = collectionRef.snapshots();
     var result = snapshots.map(

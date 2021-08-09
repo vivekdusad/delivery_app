@@ -4,6 +4,7 @@ import 'package:delivery_app/constants/size_config.dart';
 
 import 'otp_form.dart';
 
+// ignore: must_be_immutable
 class Body extends StatelessWidget {
   TextEditingController otpController;
   Body({@required TextEditingController otpController});

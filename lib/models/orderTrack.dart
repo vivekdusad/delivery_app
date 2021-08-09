@@ -9,7 +9,9 @@ class OrderTrack {
   String date;
   String address;
   String total;
+  // ignore: non_constant_identifier_names
   String order_id;
+  // ignore: non_constant_identifier_names
   String user_id;
   List<Product> items;
   bool isReady = false;
@@ -19,7 +21,9 @@ class OrderTrack {
   OrderTrack({
     @required this.name,
     @required this.total,
+    // ignore: non_constant_identifier_names
     @required this.order_id,
+    // ignore: non_constant_identifier_names
     @required this.user_id,
     @required this.items,
     @required this.isReady,
@@ -31,7 +35,9 @@ class OrderTrack {
   OrderTrack copyWith({
     String name,
     String total,
+    // ignore: non_constant_identifier_names
     String order_id,
+    // ignore: non_constant_identifier_names
     String user_id,
     List<Product> items,
     bool isReady,

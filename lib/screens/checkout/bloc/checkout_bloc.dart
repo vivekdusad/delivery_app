@@ -19,6 +19,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       yield OrderSaving();
       try {
         
+       // ignore: non_constant_identifier_names
        final order_id =  await database.saveOrder(event.order);
         yield OrderSaved(order_id: order_id);
       } on FirebaseException catch (e) {

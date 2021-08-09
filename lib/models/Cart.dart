@@ -2,28 +2,37 @@ import 'package:delivery_app/models/Product.dart';
 import 'package:flutter/widgets.dart';
 
 class Cart extends ChangeNotifier {
-  List<Product> products = [];
-  List<Product> get getProducts => products;
+  Map<Product, int> products = {};
+  Map<Product, int> get getProducts => products;
   double get total {
-    return products.fold(0.0, (double currentTotal, Product nextProduct) {
-      return currentTotal + int.parse(nextProduct.price);
+    // return products.fold(0.0, (double currentTotal, Product nextProduct) {
+    //   return currentTotal + int.parse(nextProduct.price);
+    // });
+    double totalsum = 0;
+    products.forEach((key, value) {
+      totalsum = totalsum + int.parse(key.price)*value;
     });
+    return totalsum;
   }
 
   void addToCart(Product product) {
-    products.add(product);
+    if (products.containsKey(product)) {
+      products[product] += 1;
+    } else {
+      products[product] = 1;
+    }
     notifyListeners();
   }
 
   void removeFromCart(Product product) {
-    if (products.contains(product)) {
+    if (products.containsKey(product)) {
       products.remove(product);
       notifyListeners();
     }
   }
 
-  void emptyList() {
-    products = [];
+  void emptyCart() {
+    products = {};
     notifyListeners();
   }
 }

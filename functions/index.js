@@ -15,6 +15,9 @@ admin.initializeApp({
 app.get('/', (req, res) => {
    res.send('Hello World!')
 }) 
+app.get('/ready',(req,res)=>{
+  res.send('ready')
+})
  
 app.post('/', function (req, res) {
     var data =req.body;
@@ -41,6 +44,33 @@ app.post('/', function (req, res) {
         console.log("sent")
     );
     res.send('Posted')
+})
+app.post('/ready', function (req, res) {
+  var data =req.body;
+  console.log(req.body['user_id']);
+  var token = req.body['token'];
+
+  admin.messaging().sendToDevice(
+    token,
+    {        
+      data: {
+        "user_id":data['user_id'],
+        "order_id":data['order_id'],
+        "order":data['order']
+      },
+      notification: {
+          title: "New Order!",
+          body: "click to see this.",
+          sound:'default',
+          android_channel_id:"high_importance_channel",
+          
+      },
+    },
+    {priority:"high"}
+    ).then(
+      console.log("sent")
+  );
+  res.send('Posted')
 })
 
 app.listen(port, () => {

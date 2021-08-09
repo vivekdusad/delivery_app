@@ -9,6 +9,8 @@ import 'package:equatable/equatable.dart';
 part 'history_event.dart';
 part 'history_state.dart';
 
+//[] for(int i=0;i<n;i++){for(int j=0;j<n1;j++){temp.push_back(product)}}
+
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   Database database;
   HistoryBloc({this.database}) : super(HistoryInitial());
@@ -20,7 +22,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     if (event is GetHistory) {
       yield HistoryLoading();
       try {
-        Stream<List<Order>> order = await database.getHistory();
+        Stream<List<Order>> order = database.getHistory();
         yield HistoryLoaded(orders: order);
       } on FirebaseException catch (e) {
         yield HistoryErrorOccured(e: e);

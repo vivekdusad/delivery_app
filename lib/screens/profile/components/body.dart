@@ -1,4 +1,5 @@
 import 'package:delivery_app/constants/provider.dart';
+
 import 'package:delivery_app/screens/user_details/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,10 @@ class Body extends StatelessWidget {
                       onPressed: () async {
                         await ProviderContainer().read(phoneauth).signout();
                         Navigator.pop(context);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SignInScreen()));
                       },
                       child: Text("Logout"))
                 ],

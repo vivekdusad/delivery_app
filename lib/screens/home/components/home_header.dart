@@ -6,7 +6,6 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../../constants/size_config.dart';
 import 'icon_btn_with_counter.dart';
-import 'search_field.dart';
 
 class HomeHeader extends ConsumerWidget {
   const HomeHeader({
@@ -22,12 +21,25 @@ class HomeHeader extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SearchField(),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Search Icon.svg",
-            // numOfitem: 3,
-            press: () {},
-          ),
+          InkWell(
+              onTap: () {},
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.location_history),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(200, context),
+                    child: Text(
+                      "Behined Nehru Garden,New Colony Lalsot",
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
+              )),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Cart Icon.svg",
             numOfitem: provider.getProducts.length > 0

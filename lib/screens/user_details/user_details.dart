@@ -1,12 +1,10 @@
 import 'package:delivery_app/constants/constants.dart';
 import 'package:delivery_app/constants/provider.dart';
-import 'package:delivery_app/models/user.dart';
 import 'package:delivery_app/screens/user_details/bloc/details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class SettingsUI extends StatelessWidget {
   @override
@@ -31,7 +29,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       builder: (context, watch, child) {
         final detailsbloc = watch(detailsblocProvider);
         detailsbloc.add(DetailsPageOpened());
-        
+
         return Scaffold(
           appBar: AppBar(),
           body: BlocListener<DetailsBloc, DetailsState>(
@@ -100,11 +98,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                               RaisedButton(
                                 onPressed: () {
-                                  final user = User(
-                                      name: _nameController.text,
-                                      address: _addressController.text,
-                                      phone: _phoneController.text,
-                                      pin_code: state.user.pin_code);
+                                  final currentUser = ProviderContainer()
+                                      .read(currentUserprovider);
+                                  final user = currentUser.currentUser.copyWith(
+                                    name: _nameController.text,
+                                    phone: _phoneController.text,
+                                    address: _addressController.text,
+                                  );
                                   print(_phoneController.text);
                                   detailsbloc.add(UpdateDetails(user));
                                 },
