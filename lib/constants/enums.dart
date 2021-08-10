@@ -13,3 +13,11 @@ class Category {
   static String selfCare = "SELF_CARE";
   static String bath = "BATH";
 }
+
+enum tracks{
+  preparing,
+  ready,
+  outfordelivery,
+  comletted,
+  cancelled,
+}

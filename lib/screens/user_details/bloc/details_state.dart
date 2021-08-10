@@ -20,6 +20,6 @@ class DetailsErrorOccured extends DetailsState {
 }
 
 class DetailsOpened extends DetailsState {
-  final User user;
+  final Users user;
   DetailsOpened(this.user);
 }

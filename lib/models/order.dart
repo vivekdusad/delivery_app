@@ -16,13 +16,10 @@ class Order {
   String long;
   List<Product> items = [];
   String date;
+  String track;
   // ignore: non_constant_identifier_names
   String user_id;
-  bool completted = false;
-  bool delivered = false;
-  bool cancelled = false;
-  bool outfordelivery = false;
-  bool ready = false;
+
   List<int> counts = [];
   Order({
     @required this.total,
@@ -35,11 +32,7 @@ class Order {
     @required this.user_id,
     @required this.lat,
     @required this.long,
-    this.completted = false,
-    this.delivered = false,
-    this.cancelled = false,
-    this.outfordelivery = false,
-    this.ready = false,
+    @required this.track,
     this.counts,
   });
 
@@ -57,12 +50,14 @@ class Order {
     bool cancelled,
     bool outfordelivery,
     bool ready,
+    String track,
     List<String> counts,
   }) {
     return Order(
+      track: track??this.track,
       total: total ?? this.total,
-      lat: lat??this.lat,
-      long: long??this.long,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
       order_id: order_id ?? this.order_id,
       name: name ?? this.name,
       address: address ?? this.address,
@@ -70,11 +65,6 @@ class Order {
       items: items ?? this.items,
       date: date ?? this.date,
       user_id: user_id ?? this.user_id,
-      completted: completted ?? this.completted,
-      delivered: delivered ?? this.delivered,
-      cancelled: cancelled ?? this.cancelled,
-      outfordelivery: outfordelivery ?? this.outfordelivery,
-      ready: ready ?? this.ready,
       counts: counts ?? this.counts,
     );
   }
@@ -84,19 +74,15 @@ class Order {
       'total': total,
       'order_id': order_id,
       'name': name,
-      'lat':lat,
-      'long':long,
+      'lat': lat,
+      'long': long,
       'address': address,
       'token': token,
       'items': items?.map((x) => x.toMap())?.toList(),
       'date': date,
       'user_id': user_id,
-      'completted': completted,
-      'delivered': delivered,
-      'cancelled': cancelled,
-      'outfordelivery': outfordelivery,
-      'ready': ready,
       'counts': counts,
+      'track':track,
     };
   }
 
@@ -109,14 +95,10 @@ class Order {
       name: map['name'],
       address: map['address'],
       token: map['token'],
+      track: map['track'],
       items: List<Product>.from(map['items']?.map((x) => Product.fromMap(x))),
       date: map['date'],
       user_id: map['user_id'],
-      completted: map['completted'],
-      delivered: map['delivered'],
-      cancelled: map['cancelled'],
-      outfordelivery: map['outfordelivery'],
-      ready: map['ready'],
       counts: List<int>.from(map['counts']),
     );
   }
@@ -127,7 +109,7 @@ class Order {
 
   @override
   String toString() {
-    return 'Order(total: $total, order_id: $order_id, name: $name, address: $address, token: $token, items=[]: $items=[], date: $date, user_id: $user_id, completted: $completted, delivered: $delivered, cancelled: $cancelled, outfordelivery: $outfordelivery, ready: $ready, counts=[]: $counts=[])';
+    return 'Order(total: $total, order_id: $order_id, name: $name, address: $address, token: $token, items=[]: $items=[], date: $date, user_id: $user_id,counts=[]: $counts=[])';
   }
 
   @override
@@ -143,11 +125,6 @@ class Order {
         listEquals(other.items = [], items = []) &&
         other.date == date &&
         other.user_id == user_id &&
-        other.completted == completted &&
-        other.delivered == delivered &&
-        other.cancelled == cancelled &&
-        other.outfordelivery == outfordelivery &&
-        other.ready == ready &&
         listEquals(other.counts = [], counts = []);
   }
 }

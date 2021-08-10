@@ -15,8 +15,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Stack(
+    return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Container(
@@ -31,7 +30,9 @@ class _BodyState extends State<Body> {
         Padding(
           padding: EdgeInsets.all(getProportionateScreenHeight(20, context)),
           child: DefaultButton(
+            color: Colors.white,
             text: "Get Started",
+            textColor: kPrimaryColor,
             press: () async {
               final ls = ProviderContainer().read(localStorageProvider);
               ls.saveBool(key: Constants.firstTime, value: false);
@@ -44,6 +45,6 @@ class _BodyState extends State<Body> {
           ),
         ),
       ],
-    ));
+    );
   }
 }

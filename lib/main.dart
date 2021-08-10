@@ -39,7 +39,6 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-
 class MyApp extends StatefulWidget {
   MyApp();
   @override

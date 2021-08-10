@@ -1,12 +1,16 @@
-import 'dart:convert';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/database/database.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/models/user.dart';
+
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseBase implements Database {
   final _firestore = FirebaseFirestore.instance;
@@ -17,111 +21,124 @@ class DatabaseBase implements Database {
 
   @override
   Stream<List<Product>> getSuggestions(String query) {
-    final refrence = _firestore.collection(ApiPath.products);
-    final snaps =
-        refrence.where("name", isGreaterThanOrEqualTo: query).snapshots();
-    var results = snaps.map(
-        (event) => event.docs.map((e) => Product.fromMap(e.data())).toList());
-    return results;
+    try {
+      final refrence = _firestore.collection(ApiPath.products);
+      final snaps =
+          refrence.where("name", isGreaterThanOrEqualTo: query).snapshots();
+      var results = snaps.map(
+          (event) => event.docs.map((e) => Product.fromMap(e.data())).toList());
+      return results;
+    } on SocketException catch (e) {
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
+    }
   }
 
   @override
   Stream<List<Product>> readProducts(String apiPath) {
-    final collectionRef = _firestore.collection(ApiPath.products);
-    final snapshots = collectionRef.snapshots();
-    var result = snapshots.map(
-        (event) => event.docs.map((e) => Product.fromMap(e.data())).toList());
-    return result;
+    try {
+      final collectionRef = _firestore.collection(ApiPath.products);
+      final snapshots = collectionRef.snapshots();
+      var result = snapshots.map(
+          (event) => event.docs.map((e) => Product.fromMap(e.data())).toList());
+      return result;
+    } on SocketException catch (e) {
+      print("socket");
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
+    }
   }
 
-  Future<void> updateUser(User user) async {
-    print(ApiPath.users(uid));
-    final collectionRef = _firestore.collection(ApiPath.users(uid)).doc(uid);
-    final id = collectionRef.id;
-    await collectionRef
-        .update(user.copyWith(id: id).toMap())
-        .then((value) => print("success"));
+  Future<void> updateUser(Users user) async {
+    try {
+      print(ApiPath.users(uid));
+      final collectionRef = _firestore.collection(ApiPath.users(uid)).doc(uid);
+      final id = collectionRef.id;
+      await collectionRef
+          .update(user.copyWith(id: id).toMap())
+          .then((value) => print("success"));
+    } on SocketException catch (e) {
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
+    }
   }
 
   Future<String> saveOrder(Order order) async {
-    final document = _firestore.collection(ApiPath.orders(uid)).doc();
-    final id = document.id;
-    await document.set(order.copyWith(order_id: id).toMap());
-    var token = await FirebaseMessaging.instance.getToken();
-    Dio().post("https://a34c21ee09b6.ngrok.io", data: {
-      "user_id": "$uid",
-      "order_id": "$id",
-      "order": "${order.toMap()}",
-      'token': "$token",
-    });
-    return id;
+    try {
+      final document = _firestore.collection(ApiPath.orders(uid)).doc();
+      final id = document.id;
+      await document.set(order.copyWith(order_id: id).toMap()).then((value) => {
+        
+      });
+      
+      var token = await FirebaseMessaging.instance.getToken();
+      Dio().post("https://a34c21ee09b6.ngrok.io", data: {
+        "user_id": "$uid",
+        "order_id": "$id",
+        "order": "${order.toMap()}",
+        'token': "$token",
+      });
+      return id;
+    } on SocketException catch (e) {
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
+    }
   }
 
   // ignore: non_constant_identifier_names
   Stream<Order> orderTracker(String order_id) {
-    print(uid);
-    print(order_id);
-    final document = _firestore.doc(ApiPath.orders(uid) + "/$order_id");
-    document.update({'name': 'vivek'});
-    return document.snapshots().map((event) => Order.fromMap(event.data()));
+    try {
+      print(uid);
+      print(order_id);
+      final document = _firestore.doc(ApiPath.orders(uid) + "/$order_id");
+      document.update({'name': 'vivek'});
+      return document.snapshots().map((event) => Order.fromMap(event.data()));
+    } on SocketException catch (e) {
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
+    }
   }
 
   Stream<List<Order>> getHistory() {
-    final collectionRef = _firestore.collection(ApiPath.orders(uid));
-    final snapshots = collectionRef.snapshots();
-    var result = snapshots.map(
-        (event) => event.docs.map((e) => Order.fromMap(e.data())).toList());
-    return result;
-  }
-
-  Future<bool> updateFavorites({String productID}) async {
-    DocumentReference favoritesReference =
-        _firestore.collection(ApiPath.favorite(uid)).doc(uid);
-    return _firestore.runTransaction((Transaction tx) async {
-      DocumentSnapshot postSnapshot = await tx.get(favoritesReference);
-      if (postSnapshot.exists) {
-        Map f = postSnapshot.data();
-        List favorite = f['favorites'];
-        // Extend 'favorites' if the list does not contain the recipe ID:
-        if (!favorite.contains(productID)) {
-          print("added");
-          tx.update(favoritesReference, <String, dynamic>{
-            'favorites': FieldValue.arrayUnion([productID])
-          });
-          // Delete the recipe ID from 'favorites':
-        } else {
-          print("deleted");
-          tx.update(favoritesReference, <String, dynamic>{
-            'favorites': FieldValue.arrayRemove([productID])
-          });
-        }
-      } else {
-        // Create a document for the current user in collection 'users'
-        // and add a new array 'favorites' to the document:
-        print("added1");
-        tx.set(favoritesReference, {
-          'favorites': [productID]
-        });
-      }
-    }).then((result) {
-      return true;
-    }).catchError((error) {
-      print('Error: $error');
-      return false;
-    });
-  }
-
-  @override
-  Future<List<Product>> getFavorites() async {
-    DocumentReference favoritesReference =
-        _firestore.doc(ApiPath.favorite(uid));
     try {
-      final data = await favoritesReference.get();
-      final List list = jsonDecode(data.get('favorites')) as List;
-      return list.map((e) => Product.fromMap(e)).toList();
+      final collectionRef = _firestore.collection(ApiPath.orders(uid));
+      final snapshots = collectionRef.snapshots();
+      var result = snapshots.map(
+          (event) => event.docs.map((e) => Order.fromMap(e.data())).toList());
+      return result;
+    } on SocketException catch (e) {
+      throw SocketException("internet Error");
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(message: e.message, code: e.code);
     } on FirebaseException catch (e) {
-      print(e);
-      return [];
+      throw FirebaseException(plugin: e.plugin, message: e.message);
+    } catch (e) {
+      throw Exception("Something Went Wrong");
     }
   }
 }

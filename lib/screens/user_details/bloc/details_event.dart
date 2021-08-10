@@ -8,7 +8,7 @@ abstract class DetailsEvent extends Equatable {
 }
 
 class UpdateDetails extends DetailsEvent {
-  final User user;
+  final Users user;
   UpdateDetails(this.user);
 }
 class DetailsPageOpened extends DetailsEvent{}

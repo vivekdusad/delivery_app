@@ -11,3 +11,10 @@ class LoginRequested extends LoginEvent {
   final String phone;
   LoginRequested({this.phone});
 }
+
+class VerifyOtp extends LoginEvent {
+  final String otp;
+  VerifyOtp({this.otp});
+}
+
+

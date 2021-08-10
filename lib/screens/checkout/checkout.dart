@@ -1,4 +1,5 @@
 import 'package:delivery_app/components/default_button.dart';
+import 'package:delivery_app/constants/enums.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/constants/theme.dart';
@@ -255,10 +256,7 @@ class CheckoutScreen extends ConsumerWidget {
                                         lat: position.latitude.toString(),
                                         long: position.longitude.toString(),
                                         token: token,
-                                        completted: false,
-                                        cancelled: false,
-                                        order_id: "",
-                                        ready: false,
+                                        track: "${tracks.preparing}",
                                         user_id: uid,
                                         date: DateTime.now().toString(),
                                         total: (sum + 6).toString(),
@@ -271,10 +269,9 @@ class CheckoutScreen extends ConsumerWidget {
                                         items: watch(cartProvider)
                                             .getProducts
                                             .keys
-                                            .toList())));
+                                            .toList(), order_id: '')));
                                 watch(cartProvider).emptyCart();
 
-                                // socketUtils.sendMessge();
                               },
                               text: "Send Order",
                             );

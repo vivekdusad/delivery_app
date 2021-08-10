@@ -17,7 +17,7 @@ class HistoryLoaded extends HistoryState {
 }
 
 class HistoryErrorOccured extends HistoryState {
-  final FirebaseException e;
+  final CustomException e;
 
   HistoryErrorOccured({this.e});
 }

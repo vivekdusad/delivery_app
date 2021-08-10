@@ -8,9 +8,7 @@ abstract class Database {
   Stream<List<Product>> getSuggestions(String query);
   Future<String> saveOrder(Order order);
   Stream<List<Order>> getHistory();
-  Future<void> updateUser(User user);
+  Future<void> updateUser(Users user);
   // ignore: non_constant_identifier_names
-  Stream<Order> orderTracker(String order_id);
-  Future<bool> updateFavorites({String productID});
-  Future<List<Product>> getFavorites();
+  Stream<Order> orderTracker(String order_id);    
 }

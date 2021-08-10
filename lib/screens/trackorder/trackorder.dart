@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/constants.dart';
-
+import 'package:delivery_app/constants/enums.dart';
 import 'package:delivery_app/models/order.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-
-
 import 'package:flutter/material.dart';
-
 import 'package:im_stepper/stepper.dart';
 import 'components/addresswidget.dart';
 import 'components/datewidget.dart';
@@ -37,7 +33,7 @@ class _TrackOrderState extends State<TrackOrder> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> tracks = [
+    List<String> track = [
       "Order Placed",
       "Ready",
       "Out For Delivery",
@@ -101,14 +97,15 @@ class _TrackOrderState extends State<TrackOrder> {
                             Icon(Icons.radio_button_checked,
                                 color: Colors.white),
                             Icon(Icons.check,
-                                color:
-                                    data.ready ? Colors.white : kPrimaryColor),
-                            Icon(Icons.check,
-                                color: data.outfordelivery
+                                color: data.track == "${tracks.ready}"
                                     ? Colors.white
                                     : kPrimaryColor),
                             Icon(Icons.check,
-                                color: data.delivered
+                                color: data.track == "${tracks.outfordelivery}"
+                                    ? Colors.white
+                                    : kPrimaryColor),
+                            Icon(Icons.check,
+                                color: data.track == "${tracks.comletted}"
                                     ? Colors.white
                                     : kPrimaryColor),
                           ],
@@ -129,7 +126,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 16.0),
                                     title: Text(
-                                      tracks[index],
+                                      track[index],
                                       style: TextStyle(fontSize: 18.0),
                                     ),
                                     subtitle: Text(

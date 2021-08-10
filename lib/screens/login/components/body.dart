@@ -61,37 +61,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.01),
-                InkWell(
-                  onTap: () {
-                    
-                  },
-                  child: Card(
-                    color: Colors.indigo,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/facebook-2.svg',
-                            color: Colors.white,
-                            width: 30,
-                            height: 30,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Login with Facebook",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ),

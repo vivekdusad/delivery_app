@@ -13,7 +13,7 @@ class LocalStorage {
     await box.put(key, value);
   }
 
-  Future<void> saveUserToStorage(User user) async {
+  Future<void> saveUserToStorage(Users user) async {
     // String us = jsonEncode(user);
     // await sharedPreferences
     //     .setString('user', us)
@@ -22,11 +22,11 @@ class LocalStorage {
     await box.put('user', user);
   }
 
-  Future<User> getUserFromStorage() async {
+  Future<Users> getUserFromStorage() async {
     // String json = jsonDecode(sharedPreferences.getString('user'));
     // var user = User.fromJson(json);
     // return user;
-    final User user = await box.get('user');
+    final Users user = await box.get('user');
     return user;
   }
 

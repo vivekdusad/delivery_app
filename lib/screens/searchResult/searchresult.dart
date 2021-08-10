@@ -1,3 +1,4 @@
+import 'package:delivery_app/components/error_widget.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/screens/results/bloc/results_bloc.dart';
 import 'package:delivery_app/screens/results/components/body.dart';
@@ -26,7 +27,9 @@ class SearchResultPage extends StatelessWidget {
               } else if (state is ResultsLoaded) {
                 return Body(product: state.products);
               } else if (state is ResultsErrorOccured) {
-                return Center(child: Text(state.message));
+                return CustomErrorWidget(
+                  exception: state.exception,
+                );
               }
               return Container(
                 color: Colors.red,

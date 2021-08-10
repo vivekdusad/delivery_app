@@ -22,8 +22,8 @@ class OrderSaved extends CheckoutState {
 }
 
 class OrderErrorOccured extends CheckoutState {
-  final FirebaseException e;
+  final CustomException exception;
   OrderErrorOccured({
-    @required this.e,
+    @required this.exception,
   });
 }

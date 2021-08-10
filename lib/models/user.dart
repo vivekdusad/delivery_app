@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-class User {
+class Users {
   String name;
   String id;
   
@@ -12,7 +12,7 @@ class User {
   String phone;
   // ignore: non_constant_identifier_names
   String pin_code;
-  User({
+  Users({
     @required this.name,
     @required this.id,
     @required this.address,
@@ -24,7 +24,7 @@ class User {
     @required this.pin_code,
   });
 
-  User copyWith({
+  Users copyWith({
     String name,
     String id,
     String address,
@@ -32,7 +32,7 @@ class User {
     // ignore: non_constant_identifier_names
     String pin_code,
   }) {
-    return User(
+    return Users(
       lat: lat??this.lat,
       long: long??this.long,
 
@@ -56,8 +56,8 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory Users.fromMap(Map<String, dynamic> map) {
+    return Users(
       name: map['name'],
       lat: map['lat'],
       long: map['long'],
@@ -70,7 +70,7 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+  factory Users.fromJson(String source) => Users.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -81,7 +81,7 @@ class User {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is User &&
+    return other is Users &&
         other.name == name &&
         other.id == id &&
         other.address == address &&

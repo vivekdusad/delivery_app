@@ -17,6 +17,6 @@ class ResultsLoaded extends ResultsState {
 }
 
 class ResultsErrorOccured extends ResultsState {
-  final String message;
-  ResultsErrorOccured({this.message});
+  final CustomException exception;
+  ResultsErrorOccured({this.exception});
 }

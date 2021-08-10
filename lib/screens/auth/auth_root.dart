@@ -1,28 +1,8 @@
-import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/screens/home/home_screen.dart';
 import 'package:delivery_app/screens/login/login.dart';
-import 'package:delivery_app/screens/otp/otp_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AuthRoot extends ConsumerWidget {
-  const AuthRoot({Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final otpsent = watch(otpsentprovider);
-    return ValueListenableBuilder(
-        valueListenable: otpsent.valueNotifier,
-        builder: (context, value, child) {
-          print(value);
-          if (!value) {
-            return SignInScreen();
-          } else {
-            return Otpscreen();
-          }
-        });
-  }
-}
 
 class RouteBasedOnAuth extends StatelessWidget {
   @override
@@ -37,7 +17,7 @@ class RouteBasedOnAuth extends StatelessWidget {
             if (snapshot.data != null && _firebase.currentUser != null)
               return HomeScreen();
             else
-              return AuthRoot();
+              return SignInScreen();
           }
 
           return CircularProgressIndicator();
