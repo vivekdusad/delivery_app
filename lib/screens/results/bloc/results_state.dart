@@ -12,8 +12,12 @@ class ResultsInitial extends ResultsState {}
 class ResultsLoading extends ResultsState {}
 
 class ResultsLoaded extends ResultsState {
-  final Stream<List<Product>> products;
+  final List<Product> products;
   ResultsLoaded({this.products});
+}
+class ResultsLoadedStream extends ResultsState {
+  final Stream<List<Product>> products;
+  ResultsLoadedStream({this.products});
 }
 
 class ResultsErrorOccured extends ResultsState {

@@ -13,22 +13,22 @@ class Categories extends StatelessWidget {
       {
         "icon": "assets/icons/Flash Icon.svg",
         "text": "Cleansres",
-        "path": Category.selfCare
+        "path": Category.Bath_cleansers
       },
       {
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Kitchen Essentials",
-        "path": Category.selfCare
+        "path": Category.kitchen_essentials
       },
       {
         "icon": "assets/icons/Game Icon.svg",
         "text": "Bath Essentials",
-        "path": Category.selfCare
+        "path": Category.home_essentials
       },
       {
         "icon": "assets/icons/Gift Icon.svg",
         "text": "Skin Care",
-        "path": Category.selfCare
+        "path": Category.skincare
       },
     ];
     return Padding(

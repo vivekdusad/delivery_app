@@ -59,7 +59,7 @@ List<Product> demoProducts = [
     
     image_url: url,
     name: "Mung Daal",
-    category: Category.kitchen,
+    category: Category.kitchen_essentials,
     price: "250",
   ),
   Product(
@@ -67,7 +67,7 @@ List<Product> demoProducts = [
     subcategory: "",
     image_url: url,
     name: "Surf Excel",
-    category: Category.cleansers,
+    category: Category.Bath_cleansers,
     price: "120",
   ),
   Product(
@@ -75,13 +75,13 @@ List<Product> demoProducts = [
     subcategory: "",
     image_url: url,
     name: "Mung Daal",
-    category: Category.kitchen,
+    category: Category.kitchen_essentials,
     price: "64",
   ),
   Product(
     id: "4",
     subcategory: "",
-    category: Category.kitchen,
+    category: Category.kitchen_essentials,
     image_url: url,
     name: "Rajma",
     price: "50",

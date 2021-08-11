@@ -10,6 +10,7 @@ import 'package:delivery_app/screens/checkout/bloc/checkout_bloc.dart';
 
 import 'package:delivery_app/screens/history/bloc/history_bloc.dart';
 import 'package:delivery_app/screens/login/bloc/login_bloc.dart';
+import 'package:delivery_app/screens/results/bloc/results_bloc.dart';
 import 'package:delivery_app/screens/search/bloc/search_bloc.dart';
 import 'package:delivery_app/screens/user_details/bloc/details_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final databaseProvider = Provider<Database>(
     (ref) => DatabaseBase(uid: FirebaseAuth.instance.currentUser.uid));
-
 
 final cartProvider = ChangeNotifierProvider<Cart>((ref) => Cart());
 
@@ -43,3 +43,7 @@ final currentUserprovider =
     ChangeNotifierProvider((ref) => CurrentUserNotifer());
 
 final loginblocprovider = Provider((ref) => LoginBloc());
+
+final resultsblocProvider = Provider((ref) => ResultsBloc(ref.read(databaseProvider)));
+
+

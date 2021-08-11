@@ -1,34 +1,52 @@
 import 'package:delivery_app/components/product_card.dart';
+import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/models/Product.dart';
-import 'package:flutter/material.dart';
+import 'package:delivery_app/screens/results/bloc/results_bloc.dart';
 
-class Body extends StatelessWidget {
-  final Stream<List<Product>> product;
-  const Body({Key key, this.product}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class Body extends StatefulWidget {
+  final List<Product> product;
+  final String path;
+  Body({Key key, this.product, this.path}) : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  ScrollController controller;
+  ResultsBloc resultsbloc;
+  @override
+  void initState() {
+    resultsbloc = ProviderContainer().read(resultsblocProvider);
+    _scrollListener();
+    super.initState();
+  }
+
+  void _scrollListener() {
+    controller = ScrollController();
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange) {
+        print("at the end of list");
+        resultsbloc.add(ResultLoad(category: widget.path));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Product>>(
-      stream: product,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.all(getProportionateScreenHeight(20,context)),
-                  child: ProductCard(product: snapshot.data[index]),
-                );
-              });
-        }
-        if (snapshot.hasError) {
-          return Container(
-            child: Center(child: Text(snapshot.error.toString())),
+    return ListView.builder(
+        controller: controller,
+        itemCount: widget.product.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.all(getProportionateScreenHeight(20, context)),
+            child: ProductCard(product: widget.product[index]),
           );
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+        });
   }
 }

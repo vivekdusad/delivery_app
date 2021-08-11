@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/constants.dart';
 import 'package:delivery_app/constants/provider.dart';
+import 'package:delivery_app/models/user.dart';
 import 'package:delivery_app/screens/auth/auth_root.dart';
 import 'package:delivery_app/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,7 @@ void main() async {
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
   await Hive.initFlutter();
+  Hive.registerAdapter(UsersAdapter(), internal: false);
   await Hive.openBox('user');
   runApp(ProviderScope(child: MyApp()));
 }

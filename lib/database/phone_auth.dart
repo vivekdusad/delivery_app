@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,15 +53,14 @@ class PhoneAuth {
     );
   }
 
-  signIn({@required String smsOTP}) {
+  signIn({@required String smsOTP}) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
-      auth.signInWithCredential(credential);
-      // Todo After Verification Complete
-      // Navigator.of(context).pop();
+      await auth.signInWithCredential(credential);
+      await FirebaseAuth.instance.currentUser.updatePhoneNumber(credential);
     } catch (e) {
       print(e);
     }
@@ -77,8 +78,28 @@ class PhoneAuth {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    final credintal =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    return credintal;
   }
 
-  
+  Future<bool> checkUser() async {
+    bool exist = false;
+    final uid = FirebaseAuth.instance.currentUser.uid;
+    try {
+      await FirebaseFirestore.instance
+          .collection(ApiPath.users(uid))
+          .doc(uid)
+          .snapshots()
+          .asBroadcastStream()
+          .first
+          .then((value) {
+        exist = value.exists;
+      });
+      return exist;
+    } catch (e) {
+      return false;
+    }
+  }
 }

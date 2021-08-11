@@ -9,7 +9,6 @@ import 'package:delivery_app/database/database.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 part 'results_event.dart';
 part 'results_state.dart';
 
@@ -24,11 +23,12 @@ class ResultsBloc extends Bloc<ResultsEvent, ResultsState> {
     ResultsEvent event,
   ) async* {
     if (event is ResultLoad) {
+      print("called");
       yield ResultsLoading();
       try {
-        Stream<List<Product>> data = database.readProducts(event.category);
+        List<Product> data = await database.readProducts(event.category);
         yield ResultsLoaded(products: data);
-      }  on SocketException catch (e) {
+      } on SocketException catch (e) {
         yield ResultsErrorOccured(
             exception: CustomException(message: "Internet Error", path: ""));
       } on FirebaseAuth catch (e) {
@@ -42,11 +42,11 @@ class ResultsBloc extends Bloc<ResultsEvent, ResultsState> {
             exception:
                 CustomException(message: "Something Wrong Happened", path: ""));
       }
-    }else if (event is SearchResultLoad) {
+    } else if (event is SearchResultLoad) {
       yield ResultsLoading();
       try {
         Stream<List<Product>> data = database.getSuggestions(event.query);
-        yield ResultsLoaded(products: data);
+        yield ResultsLoadedStream(products: data);
       } on SocketException catch (e) {
         yield ResultsErrorOccured(
             exception: CustomException(message: "Internet Error", path: ""));
