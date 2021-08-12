@@ -91,7 +91,7 @@ class Product {
 
 // Our demo Products
 const url =
-    "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/moong.jpg?alt=media&token=6c21c753-492a-415c-9330-332f41b1b63c";
+    "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/dantkanti-min.jpg?alt=media&token=2e9e3b21-7bfc-43eb-8c08-5408cff853d7";
 
 
 

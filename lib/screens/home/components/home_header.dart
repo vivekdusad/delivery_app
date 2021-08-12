@@ -1,7 +1,9 @@
 import 'package:delivery_app/constants/provider.dart';
+import 'package:delivery_app/models/user.dart';
 import 'package:delivery_app/screens/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../constants/size_config.dart';
@@ -30,13 +32,19 @@ class HomeHeader extends ConsumerWidget {
                   SizedBox(
                     width: 2,
                   ),
-                  SizedBox(
-                    width: getProportionateScreenWidth(200, context),
-                    child: Text(
-                      "Behined Nehru Garden,New Colony Lalsot",
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.clip,
-                    ),
+                  WatchBoxBuilder(
+                    box: Hive.box('user'),
+                    builder: (context, box) {
+                      final user = box.get('user') as Users;
+                      return SizedBox(
+                        width: getProportionateScreenWidth(200, context),
+                        child: Text(
+                          user.address,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                        ),
+                      );
+                    },
                   ),
                 ],
               )),

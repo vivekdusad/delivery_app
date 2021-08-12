@@ -1,5 +1,6 @@
 import 'package:delivery_app/constants/constants.dart';
 import 'package:delivery_app/constants/provider.dart';
+import 'package:delivery_app/helper/keyboard.dart';
 import 'package:delivery_app/screens/user_details/bloc/details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,6 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                               RaisedButton(
                                 onPressed: () {
+                                  KeyboardUtil.hideKeyboard(context);
                                   final currentUser = ProviderContainer()
                                       .read(currentUserprovider);
                                   final user = currentUser.currentUser.copyWith(

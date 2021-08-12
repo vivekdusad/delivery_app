@@ -167,11 +167,10 @@ class DatabaseBase implements Database {
   }
 
   Future<void> saveUser({Users user}) async {
-    final doc = _firestore.collection(ApiPath.users(uid)).doc();
-    final id = doc.id;
+    final doc = _firestore.collection(ApiPath.users(uid)).doc(uid);
     //todo: change number
     await doc
-        .set(user.copyWith(id: id, phone: "8302135675").toMap())
+        .set(user.copyWith(id: uid, phone: "8302135675").toMap())
         .then((value) {
       print("sucess");
     });

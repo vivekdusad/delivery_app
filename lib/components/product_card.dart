@@ -33,10 +33,9 @@ class ProductCard extends ConsumerWidget {
               width: width,
               padding: EdgeInsets.all(getProportionateScreenWidth(20, context)),
               decoration: BoxDecoration(
-                color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: CachedNetworkImage(imageUrl: url),
+              child: CachedNetworkImage(imageUrl: product.image_url),
             ),
             const SizedBox(width: 20),
             Expanded(

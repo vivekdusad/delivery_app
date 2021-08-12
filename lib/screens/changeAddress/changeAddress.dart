@@ -21,7 +21,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(getProportionateScreenHeight(10,context)),
+          padding: EdgeInsets.all(getProportionateScreenHeight(10, context)),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -35,7 +35,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                     width: 300,
                   ),
                   SizedBox(
-                    height: getProportionateScreenHeight(10,context),
+                    height: getProportionateScreenHeight(10, context),
                   ),
                   Text("Manually Type your address or tap on Location Button"),
                 ],
@@ -61,10 +61,11 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                               List<Placemark> placemarks =
                                   await placemarkFromCoordinates(
                                       position.latitude, position.longitude);
+                              final address =
+                                  '${placemarks[0].locality},${placemarks[0].administrativeArea},${placemarks[0].subLocality},${placemarks[0].subAdministrativeArea},';
 
                               setState(() {
-                                _addresController.text =
-                                    placemarks[0].locality.toString();
+                                _addresController.text = address;
                               });
                             },
                             icon: SvgPicture.asset(

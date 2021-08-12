@@ -5,6 +5,7 @@ import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/constants/theme.dart';
 
 import 'package:delivery_app/models/order.dart';
+import 'package:delivery_app/models/user.dart';
 import 'package:delivery_app/screens/changeAddress/changeAddress.dart';
 import 'package:delivery_app/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:delivery_app/screens/checkout/components/paymentcard/confirmOrder.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'components/paymentcard/paymentcard.dart';
 
@@ -65,12 +67,19 @@ class CheckoutScreen extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: getScreenWidth(context) * 0.6,
-                          child: Text(
-                            "Behind Nehru Garden Lalsot,303503",
-                            style: getTheme(context).headline6,
-                          ),
+                        WatchBoxBuilder(
+                          box: Hive.box('user'),
+                          builder: (context, box) {
+                            final user = box.get('user') as Users;
+                            return SizedBox(
+                              width: getProportionateScreenWidth(200, context),
+                              child: Text(
+                                user.address,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.clip,
+                              ),
+                            );
+                          },
                         ),
                         TextButton(
                           onPressed: () {
@@ -269,9 +278,9 @@ class CheckoutScreen extends ConsumerWidget {
                                         items: watch(cartProvider)
                                             .getProducts
                                             .keys
-                                            .toList(), order_id: '')));
+                                            .toList(),
+                                        order_id: '')));
                                 watch(cartProvider).emptyCart();
-
                               },
                               text: "Send Order",
                             );
