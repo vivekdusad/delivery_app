@@ -28,6 +28,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         Stream<List<Order>> order = database.getHistory();
         yield HistoryLoaded(orders: order);
       } on SocketException catch (e) {
+        print(e);
         yield HistoryErrorOccured(
             e: CustomException(message: "Internet Error", path: ""));
       } on FirebaseAuth catch (e) {

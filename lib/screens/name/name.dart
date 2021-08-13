@@ -1,5 +1,4 @@
 import 'package:delivery_app/components/default_button.dart';
-import 'package:delivery_app/components/loading_widget.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/models/user.dart';

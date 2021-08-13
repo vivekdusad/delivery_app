@@ -8,6 +8,7 @@ abstract class Database {
   Future<String> saveOrder(Order order);
   Stream<List<Order>> getHistory();
   Future<void> updateUser(Users user);
+  Future<void> cancelOrder({String orderId});
   // ignore: non_constant_identifier_names
   Stream<Order> orderTracker(String order_id);
   Future<void> saveUser({Users user});

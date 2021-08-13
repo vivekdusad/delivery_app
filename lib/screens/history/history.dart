@@ -47,8 +47,9 @@ class HistoryScreen extends ConsumerWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderDetailsPage(order: list[index],)));
+                                      builder: (context) => OrderDetailsPage(
+                                            order: list[index],
+                                          )));
                             },
                             child: Card(
                               elevation: 8,
@@ -122,7 +123,7 @@ class ReadyWidget extends StatelessWidget {
   final String track;
   ReadyWidget({Key key, this.track}) : super(key: key);
 
-  Map<String, String> map = {
+  final Map<String, String> map = {
     "${tracks.preparing}": "In progress",
     "${tracks.ready}": "ready",
     "${tracks.outfordelivery}": "Out For Delivery",
@@ -133,7 +134,9 @@ class ReadyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       map[track],
-      style: TextStyle(color: Colors.green, fontSize: 15),
+      style: TextStyle(
+          color: map[track] == "Cancelled" ? Colors.red : Colors.green,
+          fontSize: 15),
     );
   }
 }

@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print(event.data);
       print(event.notification.title);
     });
-    messaging.subscribeToTopic("order");
+    
     super.initState();
   }
 

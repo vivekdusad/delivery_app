@@ -27,6 +27,7 @@ class LocalStorage {
     // var user = User.fromJson(json);
     // return user;
     final Users user = await box.get('user');
+    
     return user;
   }
 

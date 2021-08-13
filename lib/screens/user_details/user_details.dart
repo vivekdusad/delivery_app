@@ -98,11 +98,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         color: Colors.black)),
                               ),
                               RaisedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   KeyboardUtil.hideKeyboard(context);
-                                  final currentUser = ProviderContainer()
-                                      .read(currentUserprovider);
-                                  final user = currentUser.currentUser.copyWith(
+                                  final currentUser = await ProviderContainer()
+                                      .read(localStorageProvider)
+                                      .getUserFromStorage();
+                                  final user = currentUser.copyWith(
                                     name: _nameController.text,
                                     phone: _phoneController.text,
                                     address: _addressController.text,
@@ -145,16 +146,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextFormField(
-        initialValue: controller.text,
+        controller: controller,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
+          labelText: labelText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
       ),
     );
   }

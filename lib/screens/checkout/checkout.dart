@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:delivery_app/components/default_button.dart';
 import 'package:delivery_app/constants/enums.dart';
 import 'package:delivery_app/constants/provider.dart';
@@ -25,6 +27,9 @@ class CheckoutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     var sum = watch(cartProvider).total;
+    Random rnd = new Random();
+    int min = 1000;
+    int max = 9999;
     final checkoutBloc = watch(checkoutblocProvider);
     return Scaffold(
       body: Stack(
@@ -256,10 +261,12 @@ class CheckoutScreen extends ConsumerWidget {
                                 var position =
                                     await Geolocator.getCurrentPosition();
                                 var uid = FirebaseAuth.instance.currentUser.uid;
-                                print(uid);
+
                                 var token =
                                     await FirebaseMessaging.instance.getToken();
-                                print(token);
+                                final user = await ProviderContainer()
+                                    .read(localStorageProvider)
+                                    .getUserFromStorage();
                                 checkoutBloc.add(SaveOrder(
                                     order: Order(
                                         lat: position.latitude.toString(),
@@ -269,8 +276,8 @@ class CheckoutScreen extends ConsumerWidget {
                                         user_id: uid,
                                         date: DateTime.now().toString(),
                                         total: (sum + 6).toString(),
-                                        name: "vivek",
-                                        address: "behined nehru garden",
+                                        name: user.name,
+                                        address: user.address,
                                         counts: watch(cartProvider)
                                             .getProducts
                                             .values
@@ -279,6 +286,8 @@ class CheckoutScreen extends ConsumerWidget {
                                             .getProducts
                                             .keys
                                             .toList(),
+                                        code: "${min+rnd.nextInt(max-min)}",
+                                        phone: user.phone,
                                         order_id: '')));
                                 watch(cartProvider).emptyCart();
                               },

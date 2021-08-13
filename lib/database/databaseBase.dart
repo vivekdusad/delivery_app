@@ -6,12 +6,10 @@ import 'package:delivery_app/database/database.dart';
 import 'package:delivery_app/models/Product.dart';
 import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/models/user.dart';
-
+import 'package:delivery_app/constants/enums.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DatabaseBase implements Database {
@@ -33,6 +31,7 @@ class DatabaseBase implements Database {
           (event) => event.docs.map((e) => Product.fromMap(e.data())).toList());
       return results;
     } on SocketException catch (e) {
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
@@ -71,7 +70,7 @@ class DatabaseBase implements Database {
       });
       return product;
     } on SocketException catch (e) {
-      print("socket");
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
@@ -92,6 +91,7 @@ class DatabaseBase implements Database {
           .update(user.copyWith(id: id).toMap())
           .then((value) => print("success"));
     } on SocketException catch (e) {
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
@@ -109,23 +109,33 @@ class DatabaseBase implements Database {
       await document
           .set(order.copyWith(order_id: id).toMap())
           .then((value) => {});
-
       var token = await FirebaseMessaging.instance.getToken();
-      Dio().post("https://a34c21ee09b6.ngrok.io", data: {
+      // await sendRequestServer(
+      //   title: "Order!!",
+      //   token: "New Order",
+      //   order: order,
+      //   route: "",
+      //   id: id,
+      // );
+      Dio().post("https://95ac55c3b0d3.ngrok.io", data: {
         "user_id": "$uid",
         "order_id": "$id",
         "order": "${order.toMap()}",
+        'title': "Order!!",
+        'desc': "New Order",
         'token': "$token",
+        'code': '${order.code}',
       });
       return id;
     } on SocketException catch (e) {
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
     } on FirebaseException catch (e) {
       throw FirebaseException(plugin: e.plugin, message: e.message);
     } catch (e) {
-      throw Exception("Something Went Wrong");
+      throw Exception(e);
     }
   }
 
@@ -138,6 +148,7 @@ class DatabaseBase implements Database {
       document.update({'name': 'vivek'});
       return document.snapshots().map((event) => Order.fromMap(event.data()));
     } on SocketException catch (e) {
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
@@ -156,6 +167,7 @@ class DatabaseBase implements Database {
           (event) => event.docs.map((e) => Order.fromMap(e.data())).toList());
       return result;
     } on SocketException catch (e) {
+      print(e);
       throw SocketException("internet Error");
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(message: e.message, code: e.code);
@@ -177,5 +189,36 @@ class DatabaseBase implements Database {
     await ProviderContainer()
         .read(localStorageProvider)
         .saveUserToStorage(user);
+  }
+
+  Future<void> sendRequestServer(
+      {Order order,
+      String title,
+      String desc,
+      String route,
+      String token,
+      String id}) async {
+    await Dio().post("https://95ac55c3b0d3.ngrok.io$route", data: {
+      "user_id": "$uid",
+      "order_id": "${order.order_id}",
+      
+      'title': "$desc",
+      'desc': "$title",
+      'token': "$token",
+      'code': '${order.code}',
+    });
+  }
+
+  Future<void> cancelOrder({String orderId})async {
+    await _firestore.collection(ApiPath.orders(uid)).doc(orderId).update({
+      'track': "${tracks.cancelled}",
+    });
+    await Dio().post("https://95ac55c3b0d3.ngrok.io/cancel", data: {
+      "user_id": "$uid",
+      "order_id": "$orderId",      
+      'title': "Your Order is Cancelled",
+      'desc': "Order Cancel!!",
+      'token': "${FirebaseMessaging.instance.getToken()}",      
+    });
   }
 }

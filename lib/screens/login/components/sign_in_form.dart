@@ -182,6 +182,7 @@ class _SignFormState extends State<SignForm> {
 
   void startTimer() {
     const onsec = Duration(seconds: 1);
+    // ignore: unused_local_variable
     Timer _timer = Timer.periodic(onsec, (timer) {
       if (start == 0) {
         setState(() {

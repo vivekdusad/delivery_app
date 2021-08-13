@@ -30,19 +30,6 @@ class HeaderWidget extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "OrderId",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-            Text(
-              "${order.order_id}",
-            )
-          ],
-        ),
         SizedBox(
           height: 4,
         ),

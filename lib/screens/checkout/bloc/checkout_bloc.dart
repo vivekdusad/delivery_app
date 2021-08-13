@@ -24,17 +24,21 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         // ignore: non_constant_identifier_names
         final order_id = await database.saveOrder(event.order);
         yield OrderSaved(order_id: order_id);
-      // ignore: unused_catch_clause
+        // ignore: unused_catch_clause
       } on SocketException catch (e) {
+        print(e);
         yield OrderErrorOccured(
             exception: CustomException(message: "Internet Error", path: ""));
       } on FirebaseAuth catch (e) {
+        print(e);
         yield OrderErrorOccured(
             exception: CustomException(message: e.languageCode, path: ""));
       } on FirebaseException catch (e) {
+        print(e);
         yield OrderErrorOccured(
             exception: CustomException(message: e.message, path: ""));
       } catch (e) {
+        print(e);
         yield OrderErrorOccured(
             exception:
                 CustomException(message: "Something Wrong Happened", path: ""));

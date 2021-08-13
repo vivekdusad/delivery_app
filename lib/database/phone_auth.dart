@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/provider.dart';
+import 'package:delivery_app/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -97,6 +98,15 @@ class PhoneAuth {
           .then((value) {
         exist = value.exists;
       });
+      if (exist) {
+        final map = await FirebaseFirestore.instance
+            .collection(ApiPath.users(uid))
+            .doc(uid)
+            .get();
+        final user = Users.fromMap(map.data());
+        final localstorage = ProviderContainer().read(localStorageProvider);
+        await localstorage.saveUserToStorage(user);
+      }
       return exist;
     } catch (e) {
       return false;

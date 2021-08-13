@@ -11,6 +11,8 @@ class Order {
   String order_id;
   String name;
   String address;
+  String phone;
+  String code;
   String token;
   String lat;
   String long;
@@ -23,12 +25,16 @@ class Order {
   List<int> counts = [];
   Order({
     @required this.total,
+    // ignore: non_constant_identifier_names
     @required this.order_id,
     @required this.name,
     @required this.address,
     @required this.token,
     @required this.items,
     @required this.date,
+    @required this.code,
+    @required this.phone,
+    // ignore: non_constant_identifier_names
     @required this.user_id,
     @required this.lat,
     @required this.long,
@@ -38,23 +44,22 @@ class Order {
 
   Order copyWith({
     String total,
+    // ignore: non_constant_identifier_names
     String order_id,
     String name,
     String address,
     String token,
     List<Product> items,
     String date,
+    // ignore: non_constant_identifier_names
     String user_id,
-    bool completted,
-    bool delivered,
-    bool cancelled,
-    bool outfordelivery,
-    bool ready,
     String track,
     List<String> counts,
+    String code,
+    String phone,
   }) {
     return Order(
-      track: track??this.track,
+      track: track ?? this.track,
       total: total ?? this.total,
       lat: lat ?? this.lat,
       long: long ?? this.long,
@@ -66,6 +71,8 @@ class Order {
       date: date ?? this.date,
       user_id: user_id ?? this.user_id,
       counts: counts ?? this.counts,
+      code: code??this.code,
+      phone: phone??this.phone,
     );
   }
 
@@ -81,8 +88,10 @@ class Order {
       'items': items?.map((x) => x.toMap())?.toList(),
       'date': date,
       'user_id': user_id,
+      'phone':phone,
+      'code':code,
       'counts': counts,
-      'track':track,
+      'track': track,
     };
   }
 
@@ -99,6 +108,8 @@ class Order {
       items: List<Product>.from(map['items']?.map((x) => Product.fromMap(x))),
       date: map['date'],
       user_id: map['user_id'],
+      code: map['code'],
+      phone: map['phone'],
       counts: List<int>.from(map['counts']),
     );
   }
@@ -110,21 +121,5 @@ class Order {
   @override
   String toString() {
     return 'Order(total: $total, order_id: $order_id, name: $name, address: $address, token: $token, items=[]: $items=[], date: $date, user_id: $user_id,counts=[]: $counts=[])';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Order &&
-        other.total == total &&
-        other.order_id == order_id &&
-        other.name == name &&
-        other.address == address &&
-        other.token == token &&
-        listEquals(other.items = [], items = []) &&
-        other.date == date &&
-        other.user_id == user_id &&
-        listEquals(other.counts = [], counts = []);
   }
 }

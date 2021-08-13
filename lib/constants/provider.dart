@@ -10,6 +10,7 @@ import 'package:delivery_app/screens/checkout/bloc/checkout_bloc.dart';
 
 import 'package:delivery_app/screens/history/bloc/history_bloc.dart';
 import 'package:delivery_app/screens/login/bloc/login_bloc.dart';
+import 'package:delivery_app/screens/order_details/bloc/orderdetails_bloc.dart';
 import 'package:delivery_app/screens/results/bloc/results_bloc.dart';
 import 'package:delivery_app/screens/search/bloc/search_bloc.dart';
 import 'package:delivery_app/screens/user_details/bloc/details_bloc.dart';
@@ -44,6 +45,7 @@ final currentUserprovider =
 
 final loginblocprovider = Provider((ref) => LoginBloc());
 
-final resultsblocProvider = Provider((ref) => ResultsBloc(ref.read(databaseProvider)));
+final resultsblocProvider =
+    Provider((ref) => ResultsBloc(ref.read(databaseProvider)));
 
-
+final orderdetailblocprovider = Provider((ref) => OrderdetailsBloc());

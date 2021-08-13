@@ -23,6 +23,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await provider.verifyPhone(event.phone);
         yield LoginSucess();
       } on SocketException catch (e) {
+        print(e);
         yield LoginFailed(
             exception: CustomException(message: "Internet Error", path: ""));
       } on FirebaseAuth catch (e) {
@@ -41,6 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await provider.signIn(smsOTP: event.otp);
         yield LoginSucess();
       } on SocketException catch (e) {
+        print(e);
         yield LoginFailed(
             exception: CustomException(message: "Internet Error", path: ""));
       } on FirebaseAuth catch (e) {

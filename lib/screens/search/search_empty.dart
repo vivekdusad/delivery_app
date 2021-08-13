@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:delivery_app/components/default_button.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptySearch extends StatelessWidget {
   const EmptySearch({Key key}) : super(key: key);
