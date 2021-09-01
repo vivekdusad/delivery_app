@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
 
 class CheckoutCard extends ConsumerWidget {
@@ -16,7 +14,6 @@ class CheckoutCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-  
     final provider = watch(cartProvider);
     return Container(
       padding: EdgeInsets.symmetric(
@@ -43,27 +40,15 @@ class CheckoutCard extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: getProportionateScreenWidth(40, context),
-                  width: getProportionateScreenWidth(40, context),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SvgPicture.asset("assets/icons/receipt.svg"),
-                ),
-                Spacer(),
-                Text("Add voucher code"),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kTextColor,
-                )
-              ],
+            Container(
+              padding: EdgeInsets.all(10),
+              height: getProportionateScreenWidth(40, context),
+              width: getProportionateScreenWidth(40, context),
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F6F9),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: SvgPicture.asset("assets/icons/receipt.svg"),
             ),
             SizedBox(height: getProportionateScreenHeight(20, context)),
             Row(

@@ -2,7 +2,7 @@ import 'package:delivery_app/models/order.dart';
 import 'package:flutter/material.dart';
 
 class ItemsSection extends StatelessWidget {
-  const ItemsSection({Key key,this.order}) : super(key: key);
+  const ItemsSection({Key key, this.order}) : super(key: key);
   final Order order;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ItemsSection extends StatelessWidget {
                             fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                       Text(
-                        "\₹${e.price}",
+                        "\₹${e.price + " * ${order.counts[order.items.indexOf(e)]}"}",
                       )
                     ],
                   ),

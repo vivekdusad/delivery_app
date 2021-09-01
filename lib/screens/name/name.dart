@@ -2,6 +2,7 @@ import 'package:delivery_app/components/default_button.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:delivery_app/models/user.dart';
+import 'package:delivery_app/screens/auth/auth_root.dart';
 import 'package:delivery_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ class _NamesPageState extends State<NamesPage> {
   bool isLoading = false;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addresController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +51,13 @@ class _NamesPageState extends State<NamesPage> {
                 decoration: InputDecoration(hintText: "Enter Address"),
               ),
               SizedBox(
+                height: getProportionateScreenHeight(20, context),
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(hintText: "Mobile Number"),
+              ),
+              SizedBox(
                 height: getProportionateScreenHeight(40, context),
               ),
               DefaultButton(
@@ -62,13 +71,13 @@ class _NamesPageState extends State<NamesPage> {
                         name: _nameController.text,
                         id: "",
                         address: _addresController.text,
-                        phone: "",
+                        phone: _phoneController.text,
                       ));
                   setState(() {
                     isLoading = false;
                   });
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => CheckLocation()));
                 },
               ),
             ],

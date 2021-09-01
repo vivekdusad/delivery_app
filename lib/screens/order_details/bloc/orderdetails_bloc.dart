@@ -3,13 +3,11 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/enums.dart';
-import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/models/custom_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 part 'orderdetails_event.dart';
 part 'orderdetails_state.dart';
 
@@ -19,8 +17,7 @@ class OrderdetailsBloc extends Bloc<OrderdetailsEvent, OrderdetailsState> {
   @override
   Stream<OrderdetailsState> mapEventToState(
     OrderdetailsEvent event,
-  ) async* {
-    final database  =ProviderContainer().read(databaseProvider);
+  ) async* {    
     if (event is CancelOrder) {
       yield OrderCancelling();
       try {

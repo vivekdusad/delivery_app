@@ -1,6 +1,6 @@
 import 'package:delivery_app/constants/provider.dart';
-
 import 'package:delivery_app/screens/user_details/user_details.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'profile_menu.dart';
@@ -24,7 +24,11 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Return Order",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => ChatScreen()));
+              // FirebaseCrashlytics.instance.crash();
+            },
           ),
           ProfileMenu(
             text: "Log Out",
@@ -42,6 +46,7 @@ class Body extends StatelessWidget {
                       onPressed: () async {
                         await ProviderContainer().read(phoneauth).signout();
                         Navigator.pop(context);
+                        ProviderContainer().read(cartProvider).emptyCart();
                         // Navigator.pushReplacement(
                         //     context,
                         //     MaterialPageRoute(

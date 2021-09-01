@@ -70,6 +70,14 @@ class HistoryScreen extends ConsumerWidget {
                                             fontSize: 15,
                                           ),
                                         ),
+                                        Text(
+                                          "Code: ${snapshot.data[index].code}",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -90,7 +98,10 @@ class HistoryScreen extends ConsumerWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              snapshot.data[index].date,
+                                              snapshot.data[index].date
+                                                  .toDate()
+                                                  .toLocal()
+                                                  .toString(),
                                               style: TextStyle(
                                                 fontSize: 15,
                                               ),

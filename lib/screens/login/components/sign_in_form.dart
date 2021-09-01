@@ -67,7 +67,10 @@ class _SignFormState extends State<SignForm> {
           final phone = snapshot.data;
           count++;
           if (phone.isNotEmpty && count == 1) {
-            _phoneController.value = TextEditingValue(text: phone.substring(2));
+            _phoneController.value = TextEditingValue(
+                text: phone.substring(0, 2) == "+91"
+                    ? phone.substring(2)
+                    : phone);
           }
         }
         return Form(
@@ -158,8 +161,8 @@ class _SignFormState extends State<SignForm> {
                     buttonName = "Resend";
                   });
                   ProviderContainer()
-                          .read(loginblocprovider)
-                          .add(LoginRequested(phone: _phoneController.text));
+                      .read(loginblocprovider)
+                      .add(LoginRequested(phone: _phoneController.text));
                   startTimer();
                 },
           child: Padding(

@@ -1,4 +1,4 @@
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:flutter/widgets.dart';
 
 class Cart extends ChangeNotifier {
@@ -10,7 +10,7 @@ class Cart extends ChangeNotifier {
     // });
     double totalsum = 0;
     products.forEach((key, value) {
-      totalsum = totalsum + int.parse(key.price)*value;
+      totalsum = totalsum + int.parse(key.price) * value;
     });
     return totalsum;
   }
@@ -26,7 +26,11 @@ class Cart extends ChangeNotifier {
 
   void removeFromCart(Product product) {
     if (products.containsKey(product)) {
-      products.remove(product);
+      if (products[product] == 1) {
+        products.remove(product);
+      } else {
+        products[product] -= 1;
+      }
       notifyListeners();
     }
   }

@@ -1,4 +1,3 @@
-
 import 'package:delivery_app/constants/enums.dart';
 import 'package:delivery_app/screens/results/results.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +16,12 @@ class Categories extends StatelessWidget {
       },
       {
         "icon": "assets/icons/Bill Icon.svg",
-        "text": "Kitchen Essentials",
+        "text": "Kitchen\nEssentials",
         "path": Category.kitchen_essentials
       },
       {
         "icon": "assets/icons/Game Icon.svg",
-        "text": "Bath Essentials",
+        "text": "Bath\nEssentials",
         "path": Category.home_essentials
       },
       {
@@ -32,7 +31,7 @@ class Categories extends StatelessWidget {
       },
     ];
     return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(20,context)),
+      padding: EdgeInsets.all(getProportionateScreenWidth(20, context)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,13 +71,13 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: SizedBox(
-        width: getProportionateScreenWidth(60,context),
+        width: getProportionateScreenWidth(70, context),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(15,context)),
-              height: getProportionateScreenWidth(55,context),
-              width: getProportionateScreenWidth(55,context),
+              padding: EdgeInsets.all(getProportionateScreenWidth(15, context)),
+              height: getProportionateScreenWidth(55, context),
+              width: getProportionateScreenWidth(60, context),
               decoration: BoxDecoration(
                 color: Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),

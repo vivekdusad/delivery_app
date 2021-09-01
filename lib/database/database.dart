@@ -1,4 +1,4 @@
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/models/user.dart';
 

@@ -1,9 +1,9 @@
 import 'package:delivery_app/components/default_button.dart';
-import 'package:delivery_app/constants/constants.dart';
+import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/constants/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class ChangeAddressScreen extends StatefulWidget {
@@ -38,44 +38,38 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                     height: getProportionateScreenHeight(10, context),
                   ),
                   Text("Manually Type your address or tap on Location Button"),
+                  SizedBox(
+                    height: getProportionateScreenHeight(30, context),
+                  ),
+                  Expanded(
+                      child: TextFormField(
+                    controller: _addresController,
+                    decoration: InputDecoration(hintText: "Enter Address"),
+                  )),
                 ],
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: TextFormField(
-                        controller: _addresController,
-                        decoration: InputDecoration(hintText: "Enter Address"),
-                      )),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: IconButton(
-                            color: kPrimaryColor,
-                            onPressed: () async {
-                              Position position = await _determinePosition();
-                              print(position.latitude);
-                              List<Placemark> placemarks =
-                                  await placemarkFromCoordinates(
-                                      position.latitude, position.longitude);
-                              final address =
-                                  '${placemarks[0].locality},${placemarks[0].administrativeArea},${placemarks[0].subLocality},${placemarks[0].subAdministrativeArea},';
-
-                              setState(() {
-                                _addresController.text = address;
-                              });
-                            },
-                            icon: SvgPicture.asset(
-                                "assets/icons/Location point.svg")),
-                      ),
-                    ],
-                  ),
                   DefaultButton(
                     text: "Save Address",
-                    press: () async {},
+                    press: () async {
+                      final user = await ProviderContainer()
+                          .read(localStorageProvider)
+                          .getUserFromStorage();
+                      if (_addresController.text.isNotEmpty) {
+                        ProviderContainer()
+                            .read(localStorageProvider)
+                            .saveUserToStorage(
+                                user.copyWith(address: _addresController.text));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text("Saved")));
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Please fill address")));
+                      }
+                    },
                   ),
                 ],
               )
@@ -86,6 +80,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
     );
   }
 
+  // ignore: unused_element
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -123,3 +118,26 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
     return await Geolocator.getCurrentPosition();
   }
 }
+/**
+ * Container(
+                        height: 100,
+                        width: 100,
+                        child: IconButton(
+                            color: kPrimaryColor,
+                            onPressed: () async {
+                              Position position = await _determinePosition();
+                              print(position.latitude);
+                              List<Placemark> placemarks =
+                                  await placemarkFromCoordinates(
+                                      position.latitude, position.longitude);
+                              final address =
+                                  '${placemarks[0].locality},${placemarks[0].administrativeArea},${placemarks[0].subLocality},${placemarks[0].subAdministrativeArea},';
+
+                              setState(() {
+                                _addresController.text = address;
+                              });
+                            },
+                            icon: SvgPicture.asset(
+                                "assets/icons/Location point.svg")),
+                      ),
+ */

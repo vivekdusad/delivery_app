@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/constants/apipath.dart';
 import 'package:delivery_app/constants/provider.dart';
 import 'package:delivery_app/database/database.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/models/user.dart';
 import 'package:delivery_app/constants/enums.dart';
@@ -109,15 +109,8 @@ class DatabaseBase implements Database {
       await document
           .set(order.copyWith(order_id: id).toMap())
           .then((value) => {});
-      var token = await FirebaseMessaging.instance.getToken();
-      // await sendRequestServer(
-      //   title: "Order!!",
-      //   token: "New Order",
-      //   order: order,
-      //   route: "",
-      //   id: id,
-      // );
-      Dio().post("https://95ac55c3b0d3.ngrok.io", data: {
+      var token = order.token;
+      Dio().post("https://groffie.herokuapp.com", data: {
         "user_id": "$uid",
         "order_id": "$id",
         "order": "${order.toMap()}",
@@ -161,7 +154,9 @@ class DatabaseBase implements Database {
 
   Stream<List<Order>> getHistory() {
     try {
-      final collectionRef = _firestore.collection(ApiPath.orders(uid));
+      final collectionRef = _firestore
+          .collection(ApiPath.orders(uid))
+          .orderBy('date', descending: true);
       final snapshots = collectionRef.snapshots();
       var result = snapshots.map(
           (event) => event.docs.map((e) => Order.fromMap(e.data())).toList());
@@ -182,7 +177,7 @@ class DatabaseBase implements Database {
     final doc = _firestore.collection(ApiPath.users(uid)).doc(uid);
     //todo: change number
     await doc
-        .set(user.copyWith(id: uid, phone: "8302135675").toMap())
+        .set(user.copyWith(id: uid,).toMap())
         .then((value) {
       print("sucess");
     });
@@ -198,10 +193,9 @@ class DatabaseBase implements Database {
       String route,
       String token,
       String id}) async {
-    await Dio().post("https://95ac55c3b0d3.ngrok.io$route", data: {
+    await Dio().post("https://groffie.herokuapp.com/$route", data: {
       "user_id": "$uid",
       "order_id": "${order.order_id}",
-      
       'title': "$desc",
       'desc': "$title",
       'token': "$token",
@@ -209,16 +203,16 @@ class DatabaseBase implements Database {
     });
   }
 
-  Future<void> cancelOrder({String orderId})async {
+  Future<void> cancelOrder({String orderId}) async {
     await _firestore.collection(ApiPath.orders(uid)).doc(orderId).update({
       'track': "${tracks.cancelled}",
     });
-    await Dio().post("https://95ac55c3b0d3.ngrok.io/cancel", data: {
+    await Dio().post("https://groffie.herokuapp.com/cancel", data: {
       "user_id": "$uid",
-      "order_id": "$orderId",      
+      "order_id": "$orderId",
       'title': "Your Order is Cancelled",
       'desc': "Order Cancel!!",
-      'token': "${FirebaseMessaging.instance.getToken()}",      
+      'token': "${FirebaseMessaging.instance.getToken()}",
     });
   }
 }

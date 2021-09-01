@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'Product.dart';
+import 'product.dart';
 
 class Order {
   String total;
@@ -17,7 +18,7 @@ class Order {
   String lat;
   String long;
   List<Product> items = [];
-  String date;
+  Timestamp date;
   String track;
   // ignore: non_constant_identifier_names
   String user_id;
@@ -106,7 +107,7 @@ class Order {
       token: map['token'],
       track: map['track'],
       items: List<Product>.from(map['items']?.map((x) => Product.fromMap(x))),
-      date: map['date'],
+      date: map['date'] as Timestamp,
       user_id: map['user_id'],
       code: map['code'],
       phone: map['phone'],

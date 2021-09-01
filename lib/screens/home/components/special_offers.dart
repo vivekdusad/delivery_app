@@ -32,15 +32,19 @@ class SpecialOffers extends StatelessWidget {
                 category: "Daal",
                 numOfBrands: 18,
                 press: () {
-                  Get.to(() => SpecialsProducts(query: "daal",));
+                  Get.to(() => SpecialsProducts(
+                        query: "daal",
+                      ));
                 },
               ),
               SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
+                image: "assets/images/masale.jpg",
                 category: "Masale",
                 numOfBrands: 24,
                 press: () {
-                  Get.to(() => SpecialsProducts(query: "masale",));
+                  Get.to(() => SpecialsProducts(
+                        query: "masale",
+                      ));
                 },
               ),
               SizedBox(width: getProportionateScreenWidth(20, context)),
@@ -80,7 +84,7 @@ class SpecialOfferCard extends StatelessWidget {
               children: [
                 Image.asset(
                   image,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -110,7 +114,6 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
                       ],
                     ),
                   ),

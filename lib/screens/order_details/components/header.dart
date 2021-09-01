@@ -58,7 +58,7 @@ class HeaderWidget extends StatelessWidget {
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
             Text(
-              "${order.date}",
+              "${order.date.toDate().toLocal().toString()}",
             )
           ],
         ),

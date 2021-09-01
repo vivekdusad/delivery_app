@@ -1,6 +1,6 @@
 import 'package:delivery_app/components/product_card.dart';
 import 'package:delivery_app/constants/size_config.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 
 import 'package:flutter/material.dart';
 

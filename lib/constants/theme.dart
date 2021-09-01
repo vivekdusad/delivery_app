@@ -8,6 +8,13 @@ ThemeData theme() {
     fontFamily: "Muli",
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+          textStyle: TextStyle(color: Colors.red),
+          shadowColor: Colors.red,
+          side: BorderSide(color: Colors.red),
+          primary: Colors.black),
+    ),
     inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
@@ -49,6 +56,7 @@ AppBarTheme appBarTheme() {
     ),
   );
 }
+
 TextTheme getTheme(BuildContext context) {
-    return Theme.of(context).textTheme;
-  }
+  return Theme.of(context).textTheme;
+}

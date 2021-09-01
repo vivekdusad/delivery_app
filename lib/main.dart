@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'constants/routes.dart';
 import 'constants/theme.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +27,15 @@ void main() async {
     persistenceEnabled: false,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
   await Hive.initFlutter();
   Hive.registerAdapter(UsersAdapter(), internal: false);
   await Hive.openBox('user');
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -48,7 +55,7 @@ class MyApp extends StatefulWidget {
 }
 
 Future<void> messageHandler(RemoteMessage message) async {
-  print('background message ${message.notification.body}');
+  print('background message ${message.notification.android.channelId}');
 }
 
 class _MyAppState extends State<MyApp> {

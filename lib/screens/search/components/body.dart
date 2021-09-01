@@ -1,7 +1,8 @@
 import 'package:delivery_app/components/product_card.dart';
 import 'package:delivery_app/constants/provider.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:delivery_app/screens/search/bloc/search_bloc.dart';
+import 'package:delivery_app/screens/search/components/search_initial.dart';
 import 'package:delivery_app/screens/search/search_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,8 +21,10 @@ class _BodyState extends State<Body> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
+        alignment: Alignment.bottomCenter,
         fit: StackFit.expand,
         children: [
+          Positioned.fill(top: 100, child: SearchInitialWidget()),
           buildFloatingSearchBar(),
         ],
       ),
@@ -43,16 +46,20 @@ class _BodyState extends State<Body> {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
+      onSubmitted: (value) {
+        ProviderContainer().read(historyListProvider).addHistory(value);
+      },
       onQueryChanged: (query) {
         print(query);
         if (query.isNotEmpty) {
-          bloc.add(SearchRequested(query: query));
+          bloc.add(SearchRequested(
+              query: query.substring(0, 1).toUpperCase() + query.substring(1)));
         }
       },
       transition: CircularFloatingSearchBarTransition(),
       actions: [
         FloatingSearchBarAction(
-          showIfOpened: false,
+          // showIfOpened: true,
           child: CircularButton(
             icon: const Icon(Icons.search),
             onPressed: () {},
@@ -71,7 +78,7 @@ class _BodyState extends State<Body> {
             }
             if (state is SearchLoaded) {
               return Container(
-                height: 400,
+                height: MediaQuery.of(context).size.height,
                 width: 400,
                 child: StreamBuilder<List<Product>>(
                     stream: state.products,
@@ -95,7 +102,7 @@ class _BodyState extends State<Body> {
                     }),
               );
             }
-            return Container();
+            return SearchInitialWidget();
           },
         );
       },

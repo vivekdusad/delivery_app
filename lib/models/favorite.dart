@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 
 class Favorite {
   

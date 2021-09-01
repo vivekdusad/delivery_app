@@ -4,6 +4,7 @@ import 'package:delivery_app/database/databaseBase.dart';
 import 'package:delivery_app/database/phone_auth.dart';
 import 'package:delivery_app/helper/current_user.dart';
 import 'package:delivery_app/helper/otphandler.dart';
+import 'package:delivery_app/helper/search_history.dart';
 import 'package:delivery_app/helper/sharedprefrences.dart';
 import 'package:delivery_app/models/Cart.dart';
 import 'package:delivery_app/screens/checkout/bloc/checkout_bloc.dart';
@@ -49,3 +50,6 @@ final resultsblocProvider =
     Provider((ref) => ResultsBloc(ref.read(databaseProvider)));
 
 final orderdetailblocprovider = Provider((ref) => OrderdetailsBloc());
+
+final historyListProvider = ChangeNotifierProvider((ref) => SearchHistory());
+

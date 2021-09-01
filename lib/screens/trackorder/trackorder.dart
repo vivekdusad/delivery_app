@@ -62,7 +62,7 @@ class _TrackOrderState extends State<TrackOrder> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DateWidget(),
+                  DateWidget(order:data),
                   OrderIdWidget(widget: widget),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -142,7 +142,7 @@ class _TrackOrderState extends State<TrackOrder> {
                       ),
                     ],
                   ),
-                  AddressWidget(),
+                  AddressWidget(order:data),
                 ],
               );
             }

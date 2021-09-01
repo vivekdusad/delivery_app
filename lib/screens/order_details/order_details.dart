@@ -6,6 +6,7 @@ import 'package:delivery_app/models/order.dart';
 import 'package:delivery_app/screens/order_details/bloc/orderdetails_bloc.dart';
 import 'package:delivery_app/screens/order_details/components/header.dart';
 import 'package:delivery_app/screens/order_details/components/items_section.dart';
+import 'package:delivery_app/screens/trackorder/trackorder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +56,21 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     width: double.infinity,
                     color: Color(0xFFF2F2F2),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  if (widget.order.track == "${tracks.comletted}" ||
+                      widget.order.track != "${tracks.cancelled}")
+                    DefaultButton(
+                      text: "Track Order",
+                      press: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TrackOrder(
+                                    order_id: widget.order.order_id)));
+                      },
+                    ),
                   SizedBox(
                     height: 20,
                   ),

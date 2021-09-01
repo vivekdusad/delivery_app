@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:delivery_app/models/custom_exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:delivery_app/database/database.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'results_event.dart';
 part 'results_state.dart';

@@ -1,6 +1,7 @@
 import 'package:delivery_app/constants/enums.dart';
-import 'package:delivery_app/models/Product.dart';
+import 'package:delivery_app/models/product.dart';
 import 'package:flutter/material.dart';
+
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
@@ -35,8 +36,7 @@ const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
 final otpInputDecoration = InputDecoration(
-  contentPadding:
-      EdgeInsets.symmetric(vertical: 15),
+  contentPadding: EdgeInsets.symmetric(vertical: 15),
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
@@ -49,42 +49,57 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
-class Constants{
-  static final  String firstTime = "firstTime";
+class Constants {
+  static final String firstTime = "firstTime";
 }
+
 List<Product> demoProducts = [
   Product(
     id: "1",
     subcategory: "",
-    
-    image_url: url,
+    image_url:
+        "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/moongkachilka.jpg?alt=media&token=b004a4a6-590f-4901-b610-c60fd4943d7c",
     name: "Mung Daal",
     category: Category.kitchen_essentials,
     price: "250",
+    brand: "Surf Excel",
+    discount: 15,
+    bestSeller: false,
   ),
   Product(
     id: "2",
+    image_url:
+        "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/surfexcel.jpg?alt=media&token=39962c1c-520d-4f22-a367-9d42878a7036",
     subcategory: "",
-    image_url: url,
     name: "Surf Excel",
     category: Category.Bath_cleansers,
     price: "120",
+    brand: "Surf Excel",
+    discount: 15,
+    bestSeller: true,
   ),
   Product(
     id: "3",
     subcategory: "",
-    image_url: url,
-    name: "Mung Daal",
+    image_url:
+        "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/amchoor-min.jpg?alt=media&token=d2ace3ae-314a-44c1-9786-4646a6043fa8",
+    name: "Amchoor",
     category: Category.kitchen_essentials,
     price: "64",
+    brand: "catch",
+    discount: 15,
+    bestSeller: true,
   ),
   Product(
     id: "4",
-    subcategory: "",
+    image_url:
+        "https://firebasestorage.googleapis.com/v0/b/deliveryapp-6b08d.appspot.com/o/rajma.jpg?alt=media&token=fa6820cc-0c59-45fb-8254-b7fdf4800a6d",
     category: Category.kitchen_essentials,
-    image_url: url,
+    subcategory: "",
     name: "Rajma",
     price: "50",
+    brand: "",
+    discount: 15,
+    bestSeller: true,
   ),
 ];
-
